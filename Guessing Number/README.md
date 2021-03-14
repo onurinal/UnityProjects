@@ -1,1 +1,1 @@
-![](Images/Start.png)
+❮img src="Images/Start.png" width="100" ❯
