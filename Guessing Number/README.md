@@ -1,1 +1,1 @@
-![](Images/Start.png = 100x20)
+![](Images/Start.png =100x)
