@@ -1,1 +1,1 @@
-![](Guessing%20Number/Images/Start.png)
+![](Images/Start.png)
