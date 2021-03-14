@@ -1,1 +1,1 @@
-❮img src="images/Start.png" width="100" ❯
+![](images/Start.png)
