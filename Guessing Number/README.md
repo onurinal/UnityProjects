@@ -1,1 +1,1 @@
-❮img src="Images/Start.png" width=100 ❯
+❮img src="Images/Start.png" width=500❯
