@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BlockBreaker.Player
+namespace BlockBreaker.Paddle
 {
-    [CreateAssetMenu(menuName = "BlockBreaker/Player/PlayerProperties")]
-    public class PlayerProperties : ScriptableObject
+    [CreateAssetMenu(menuName = "BlockBreaker/Paddle/PaddleProperties")]
+    public class PaddleProperties : ScriptableObject
     {
 
         [Header("Player Movement")]
