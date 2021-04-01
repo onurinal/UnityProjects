@@ -14,13 +14,9 @@ namespace BlockBreaker.Paddle
         private float _paddleX = 0f;  // paddle x size to fix screen boundaries
         private void Start()
         {
-            _paddle = GetComponent<SpriteRenderer>();
             GetPaddleHalfSize();
-
             SetUpMovementBoundaries();
         }
-
-
         private void Update()
         {
             TouchMovement();
@@ -42,6 +38,7 @@ namespace BlockBreaker.Paddle
         }
         private void GetPaddleHalfSize()  // getting only x size because we don't need y size. Paddle can not move horizontally.
         {
+            _paddle = GetComponent<SpriteRenderer>();
             _paddleX = _paddle.bounds.size.x / 2;  // Because paddle sprite pivot is bottom center
         }
     }

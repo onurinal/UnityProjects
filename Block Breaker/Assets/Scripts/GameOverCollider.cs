@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using BlockBreaker.Ball;
 
 namespace BlockBreaker.LevelSystem{
-    public class LoseCollider : MonoBehaviour
+    public class GameOverCollider : MonoBehaviour
     {
         private BallController _ballController;
         

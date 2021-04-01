@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using BlockBreaker.Block;
 
 namespace BlockBreaker.LevelSystem
 {
@@ -10,7 +11,6 @@ namespace BlockBreaker.LevelSystem
         [SerializeField] private int _breakableBlocks;
 
         // for updating score
-        [SerializeField] private int _pointPerBlockDestroyed = 10;
         [SerializeField] private int _currentScore = 0;
         [SerializeField] private TextMeshProUGUI _scoreText;
 
@@ -37,9 +37,9 @@ namespace BlockBreaker.LevelSystem
                 _sceneLoader.LoadNextScene();  // load next level when no blocks around space
             }
         }
-        public void AddToScore()
+        public void AddToScore(int perPointBlockDestroyed)
         {
-            _currentScore = _currentScore + _pointPerBlockDestroyed;
+            _currentScore = _currentScore + perPointBlockDestroyed;
             _scoreText.text = _currentScore.ToString();
         }
     }

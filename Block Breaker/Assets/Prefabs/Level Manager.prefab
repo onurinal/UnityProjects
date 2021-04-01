@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _breakableBlocks: 0
+  _currentScore: 0
+  _scoreText: {fileID: 0}
