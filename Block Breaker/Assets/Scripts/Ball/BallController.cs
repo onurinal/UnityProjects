@@ -2,40 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallController : MonoBehaviour
+namespace BlockBreaker.Ball
 {
-    [SerializeField] private BallProperties _ballProperties = null;
-    [SerializeField] private GameObject _paddle;
-    Vector2 ballToPaddleVector;
-    private bool gameStarted = false;
-    void Start()
+    public class BallController : MonoBehaviour
     {
-        BallToPaddleVector();
-    }
-    void Update()
-    {
-        if (!gameStarted)
+        [SerializeField] private BallProperties _ballProperties = null;  // for ball properties
+        [SerializeField] private GameObject _paddle; // to find paddle position and stick to the ball
+        Vector2 ballToPaddleVector; // to find the distance of the ball to paddle
+        private bool _gameStarted = false;
+        void Start()
         {
-            StickBallToPaddle();
-            LaunchOnBall();
+            BallToPaddleVector();
+        }
+        void Update()
+        {
+            if (!_gameStarted)
+            {
+                StickBallToPaddle();
+                LaunchOnBall();
+            }
+        }
+        private void StickBallToPaddle()
+        {
+            Vector2 paddlePos = new Vector2(_paddle.transform.position.x, _paddle.transform.position.y);
+            transform.position = paddlePos + ballToPaddleVector; // make it to move with the paddle
+        }
+        private void LaunchOnBall()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _gameStarted = true;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(_ballProperties.BallXSpeed, _ballProperties.BallYSpeed);
+            }
+        }
+        private void BallToPaddleVector() // to find the distance of the ball to paddle
+        {
+            ballToPaddleVector = transform.position - _paddle.transform.position;
+        }
+        public bool GameStarted // testing.. Reset the game. Look in LoseCollider.cs
+        {
+            set { _gameStarted = value; }
         }
     }
 
-    private void StickBallToPaddle()
-    {
-        Vector2 paddlePos = new Vector2(_paddle.transform.position.x, _paddle.transform.position.y);
-        transform.position = paddlePos + ballToPaddleVector; // make it to move with the paddle
-    }
-    private void LaunchOnBall()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            gameStarted = true;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(_ballProperties.BallXSpeed, _ballProperties.BallYSpeed);
-        }
-    }
-    private void BallToPaddleVector() // to find the distance of the ball to paddle
-    {
-        ballToPaddleVector = transform.position - _paddle.transform.position;
-    }
 }

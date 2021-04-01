@@ -3,29 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+namespace BlockBreaker.LevelSystem
 {
-    public void LoadNextScene()
+    public class SceneLoader : MonoBehaviour
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
-    }
-    public void LoadSameScene()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
-    }
-    public void LoadPreviousScene()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex - 1);
-    }
-    public void LoadMainMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
-    public void LoadQuit()
-    {
-        Application.Quit();
+        private int _currentSceneIndex;
+        public void LoadNextScene()
+        {
+            _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(_currentSceneIndex + 1);
+        }
+        public void LoadSameScene()
+        {
+            _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(_currentSceneIndex);
+        }
+        public void LoadPreviousScene()
+        {
+            _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(_currentSceneIndex - 1);
+        }
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene(0);
+        }
+        public void LoadQuit()
+        {
+            Application.Quit();
+        }
     }
 }
