@@ -9,7 +9,7 @@ namespace BlockBreaker.Ball
     {
         [Header("Ball Movement")]
         public float BallXSpeed = 0f;
-        public float BallYSpeed = 8f;
+        public float BallYSpeed = 7f;
     }
 }
 

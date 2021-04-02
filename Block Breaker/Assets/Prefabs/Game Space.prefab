@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 6267111197132253892}
   - component: {fileID: 6267111197132253899}
   m_Layer: 0
-  m_Name: GameOver Collider
+  m_Name: Game Over Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

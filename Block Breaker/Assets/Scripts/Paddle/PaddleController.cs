@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BlockBreaker.LevelSystem;
+using BlockBreaker.Ball;
 
 namespace BlockBreaker.Paddle
 {
@@ -14,7 +16,6 @@ namespace BlockBreaker.Paddle
         private float _paddleX = 0f;  // paddle x size to fix screen boundaries
         private void Start()
         {
-            GetPaddleHalfSize();
             SetUpMovementBoundaries();
         }
         private void Update()
@@ -31,15 +32,13 @@ namespace BlockBreaker.Paddle
         }
         private void SetUpMovementBoundaries()
         {
-            Camera gameCamera = Camera.main;
+            // getting only x size because we don't need y size. Paddle can not move horizontally.
+            _paddle = GetComponent<SpriteRenderer>(); 
+            _paddleX = _paddle.bounds.size.x / 2;  // Because paddle sprite pivot is bottom center
 
+            Camera gameCamera = Camera.main;
             _minXAndroid = gameCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + _paddleX;  
             _maxXAndroid = gameCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - _paddleX;
-        }
-        private void GetPaddleHalfSize()  // getting only x size because we don't need y size. Paddle can not move horizontally.
-        {
-            _paddle = GetComponent<SpriteRenderer>();
-            _paddleX = _paddle.bounds.size.x / 2;  // Because paddle sprite pivot is bottom center
         }
     }
 }
