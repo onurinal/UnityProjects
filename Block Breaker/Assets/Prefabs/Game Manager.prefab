@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1211445646349468043}
   - component: {fileID: 5894267860124930804}
   m_Layer: 0
-  m_Name: Level Manager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2de084775846e9498615303d1355251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _breakableBlocks: 0
+  _ballPrefab: {fileID: 4176611370848166592, guid: 127d02746d36eba45a18e102aab1a7b9, type: 3}
+  _life: 0
   _currentScore: 0
   _scoreText: {fileID: 0}

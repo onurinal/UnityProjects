@@ -8,7 +8,7 @@ namespace BlockBreaker.Paddle
     public class PaddleProperties : ScriptableObject
     {
 
-        [Header("Player Movement")]
+        [Header("Paddle Movement")]
         public float MovementSpeed = 4f;
     }
 }

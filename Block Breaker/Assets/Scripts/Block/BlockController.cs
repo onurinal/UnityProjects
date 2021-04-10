@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BlockBreaker.LevelSystem;
+using BlockBreaker.ManagerSystem;
 
 namespace BlockBreaker.Block
 {
@@ -12,23 +12,18 @@ namespace BlockBreaker.Block
 
         [SerializeField] private int _pointPerBlockDestroyed;
 
-        private LevelManager _levelManager;
-        void Start()
+        private void Start()
         {
             CountBreakableBlocks();
         }
-        void Update()
-        {
-            
-        }
         private void CountBreakableBlocks()
         {
-            _levelManager = FindObjectOfType<LevelManager>();
-            _levelManager.CountBreakableBlocks();
+            GameManager.Instance.CountBreakableBlock(gameObject);
         }
-        private void OnCollisionEnter2D(Collision2D collision)
+        public void TakeDamage()
         {
-            if(_blockLife <= 1)
+            _blockLife--;
+            if (_blockLife <= 0)
             {
                 DestroyBlock();
             }
@@ -37,17 +32,16 @@ namespace BlockBreaker.Block
                 ShowNextBlockSprite();
             }
         }
-        private void ShowNextBlockSprite()
+        public void ShowNextBlockSprite()
         {
-            _blockLife--;
             int _spriteIndex = _blockLife - 1;  // _blockSprite size is 2 so when red block got hit, _spriteIndex must be "1".
             GetComponent<SpriteRenderer>().sprite = _blockSprites[_spriteIndex];
         }
         private void DestroyBlock()
         {
-            _levelManager.AddToScore(_pointPerBlockDestroyed);
+            GameManager.Instance.AddToScore(_pointPerBlockDestroyed);
             Destroy(gameObject);
-            _levelManager.BlockDestroyed();
+            GameManager.Instance.RemoveBreakableBlock(gameObject);
         }
     }
 }
