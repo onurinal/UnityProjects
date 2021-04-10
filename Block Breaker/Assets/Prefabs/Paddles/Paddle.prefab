@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 543619838568519752}
   - component: {fileID: 543619838568519753}
-  - component: {fileID: 543619838568519754}
   - component: {fileID: 543619838568519755}
+  - component: {fileID: 350005814}
   m_Layer: 0
-  m_Name: Asset 12
+  m_Name: Paddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,72 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &543619838568519754
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543619838568519756}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.04, y: 0.20666666}
-    newSize: {x: 6.24, y: 1.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.5021385, y: 0.051659882}
-      - {x: 0.4891619, y: 0.06793213}
-      - {x: 0.47683752, y: 0.07893038}
-      - {x: 0.4583802, y: 0.090309955}
-      - {x: 0.43597427, y: 0.09732685}
-      - {x: 0.4183617, y: 0.100123405}
-      - {x: -0.4260475, y: 0.099829674}
-      - {x: -0.43932605, y: 0.09686279}
-      - {x: -0.4490766, y: 0.09401617}
-      - {x: -0.45941028, y: 0.089654446}
-      - {x: -0.46485713, y: 0.08686352}
-      - {x: -0.47673276, y: 0.07869765}
-      - {x: -0.49361628, y: 0.06300068}
-      - {x: -0.50422204, y: 0.04788685}
-      - {x: -0.51192766, y: 0.03144598}
-      - {x: -0.5164103, y: 0.013745587}
-      - {x: -0.51678884, y: 0.00091838837}
-      - {x: -0.51675296, y: -0.010241985}
-      - {x: -0.51339394, y: -0.026378632}
-      - {x: -0.5072612, y: -0.043250836}
-      - {x: -0.49486846, y: -0.061881125}
-      - {x: -0.47623783, y: -0.07980665}
-      - {x: -0.45905995, y: -0.09004164}
-      - {x: -0.4367119, y: -0.09750128}
-      - {x: -0.42695674, y: -0.09988842}
-      - {x: 0.42251635, y: -0.09999895}
-      - {x: 0.42809927, y: -0.09979439}
-      - {x: 0.4398993, y: -0.0970026}
-      - {x: 0.4556988, y: -0.091573715}
-      - {x: 0.46553302, y: -0.085953236}
-      - {x: 0.47312307, y: -0.081352234}
-      - {x: 0.4810359, y: -0.075088024}
-      - {x: 0.48676175, y: -0.07021284}
-      - {x: 0.49344933, y: -0.0630002}
-      - {x: 0.50069124, y: -0.054048356}
-      - {x: 0.50938797, y: -0.037672997}
-      - {x: 0.5136511, y: -0.025198936}
-      - {x: 0.51625866, y: -0.0149149895}
-      - {x: 0.5166959, y: -0.0045723915}
-      - {x: 0.5164063, y: 0.014696598}
-      - {x: 0.5113394, y: 0.03345768}
 --- !u!114 &543619838568519755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,3 +97,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerProperties: {fileID: 11400000, guid: 3aa33584edf273e43b0dd3d59d545b3c, type: 2}
+  _ballProperties: {fileID: 11400000, guid: fb5d1cab7888dee4aa4bb38f6ce4fef0, type: 2}
+--- !u!70 &350005814
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543619838568519756}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00014746192, y: -0.00008872896}
+  m_Size: {x: 1.0337044, y: 0.2000915}
+  m_Direction: 1
