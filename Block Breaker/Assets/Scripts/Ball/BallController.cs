@@ -1,53 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BlockBreaker.Block;
 
 namespace BlockBreaker.Ball
 {
     public class BallController : MonoBehaviour
     {
         [SerializeField] private BallProperties _ballProperties = null;  // for ball properties
-        [SerializeField] private GameObject _paddle; // to find paddle position and stick to the ball
-        Vector2 ballToPaddleVector; // to find the distance of the ball to paddle
-
-        private bool _gameStarted = false;
 
         private Rigidbody2D _rigidBody2D;
-        void Start()
+        private float _magnitudeSpeed;  // to make the ball constant speed
+
+        public bool BallLaunched;
+        private void Start()
         {
-            BallToPaddleVector();
             _rigidBody2D = GetComponent<Rigidbody2D>();
         }
-        void Update()
+        // ----------------------- LAUNCH THE BALL ---------------
+        public void LaunchBall()
         {
-            if (!_gameStarted)
+            if (!BallLaunched)
             {
-                StickBallToPaddle();
-                LaunchOnBall();
-            }
-        }
-        private void BallToPaddleVector() // to find the distance of the ball to paddle
-        {
-            ballToPaddleVector = transform.position - _paddle.transform.position;
-        }
-        private void StickBallToPaddle()
-        {
-            Vector2 paddlePos = new Vector2(_paddle.transform.position.x, _paddle.transform.position.y);
-            transform.position = paddlePos + ballToPaddleVector; // make it to move with the paddle
-        }
-        private void LaunchOnBall()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                _gameStarted = true;
                 _rigidBody2D.velocity = new Vector2(_ballProperties.BallXSpeed, _ballProperties.BallYSpeed);
+                BallLaunched = true;
+
+                transform.SetParent(transform.parent.parent); // Parent back to the world.
             }
         }
-
-
-        public bool GameStarted // testing.. Reset the game. Look in LoseCollider.cs
+        // ----------------------- DAMAGE TO BLOCKS BY BALL ---------------
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            set { _gameStarted = value; }
+            BlockController _blockController = collision.gameObject.GetComponent<BlockController>();
+            if (_blockController != null)
+            {
+                _blockController.TakeDamage();
+            }
+        }
+        // ----------------------- MAKING BALL CONSTANT SPEED ---------------
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            _magnitudeSpeed = _rigidBody2D.velocity.magnitude;
+            if (_magnitudeSpeed > _ballProperties.BallBaseSpeed || _magnitudeSpeed < _ballProperties.BallBaseSpeed)
+            {
+                _rigidBody2D.velocity = _rigidBody2D.velocity.normalized * _ballProperties.BallBaseSpeed;
+            }
         }
     }
 

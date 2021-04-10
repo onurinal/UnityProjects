@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1873776851}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,8 +120,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &1873776851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,4 +135,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ballProperties: {fileID: 11400000, guid: fb5d1cab7888dee4aa4bb38f6ce4fef0, type: 2}
-  _paddle: {fileID: 0}
+  BallLaunched: 0
