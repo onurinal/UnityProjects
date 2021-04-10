@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Ball Properties
   m_EditorClassIdentifier: 
   BallXSpeed: 0
-  BallYSpeed: 10
+  BallYSpeed: 8
+  BallBaseSpeed: 8
+  BallPushX: 100
