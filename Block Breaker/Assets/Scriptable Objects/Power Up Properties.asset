@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Power Up Properties
   m_EditorClassIdentifier: 
   DropChance: 100
-  MultiBallChance: 100
+  MultiBallChance: 0
   IncreasingPaddleSizeChance: 0
-  DecreasingPaddleSizeChance: 0
+  DecreasingPaddleSizeChance: 100
   LaserChance: 0
   DropXSpeed: 0
   DropYSpeed: 2

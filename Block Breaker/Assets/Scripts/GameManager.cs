@@ -16,7 +16,6 @@ namespace BlockBreaker.ManagerSystem
 
         public static GameManager Instance;  // singleton
         private PaddleController _paddleController; // for accessing the paddle
-        
         private void Awake()
         {
             Instance = this;
@@ -26,12 +25,10 @@ namespace BlockBreaker.ManagerSystem
             AccesingObjects();
             ResetGame();
         }
-
         private void AccesingObjects()
         {
             _paddleController = PaddleController.Instance;
         }
-
         private void Update()
         {
             if(Input.GetMouseButtonDown(0) && _ballList.Count > 0)
@@ -95,7 +92,6 @@ namespace BlockBreaker.ManagerSystem
                 Debug.Log("You Won"); // Update win screen...
             }
         }
-
         // ----------------------- POWER UPS ---------------
         public void MultiBall()
         {
@@ -109,28 +105,6 @@ namespace BlockBreaker.ManagerSystem
                     CreateNewBalls(i);
                     CreateNewBalls(i);
                 }
-
-                //// Getting ball position for making new balls
-                //Vector3 ballPosition = _ballList[i].transform.position;
-                //// Instantiate new ball
-                //newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
-                ////  For example if you make AddForce 400f then you are making rigidbody.velocity -> 8
-                //newBall.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(150f, 250f), Random.Range(300f, 350f)));
-                //// Adding new ball in ball list
-                //_ballList.Add(newBall);
-                //// FIXING THE ERROR. BALL LAUNCHED SHOULD BE TRUE TO NOT GET ERROR.
-                //newBall.GetComponent<BallController>().BallLaunched = true;
-
-                //newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
-                //newBall.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-150f, -250f), Random.Range(300f, 350f)));
-                //_ballList.Add(newBall);
-                //newBall.GetComponent<BallController>().BallLaunched = true;
-
-                //// UGURA SOR
-                ////GameObject newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
-                ////GameObject newBall2 = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
-
-                Debug.Log(_ballList.Count);
             }
         }
         private void CreateNewBalls(int i)
