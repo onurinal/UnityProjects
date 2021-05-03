@@ -9,20 +9,20 @@ namespace BlockBreaker.Ball
     {
         [SerializeField] private BallProperties _ballProperties = null;  // for ball properties
 
-        private Rigidbody2D _rigidBody2D;
+        private Rigidbody2D _rigidbody2D;
         private float _magnitudeSpeed;  // to make the ball constant speed
 
         public bool BallLaunched;
         private void Start()
         {
-            _rigidBody2D = GetComponent<Rigidbody2D>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
         }
         // ----------------------- LAUNCH THE BALL ---------------
         public void LaunchBall()
         {
             if (!BallLaunched)
             {
-                _rigidBody2D.velocity = new Vector2(_ballProperties.BallXSpeed, _ballProperties.BallYSpeed);
+                _rigidbody2D.velocity = new Vector2(_ballProperties.BallXSpeed, _ballProperties.BallYSpeed);
                 BallLaunched = true;
 
                 transform.SetParent(transform.parent.parent); // Parent back to the world.
@@ -40,10 +40,10 @@ namespace BlockBreaker.Ball
         // ----------------------- MAKING BALL CONSTANT SPEED ---------------
         private void OnCollisionExit2D(Collision2D collision)
         {
-            _magnitudeSpeed = _rigidBody2D.velocity.magnitude;
+            _magnitudeSpeed = _rigidbody2D.velocity.magnitude;
             if (_magnitudeSpeed > _ballProperties.BallBaseSpeed || _magnitudeSpeed < _ballProperties.BallBaseSpeed)
             {
-                _rigidBody2D.velocity = _rigidBody2D.velocity.normalized * _ballProperties.BallBaseSpeed;
+                _rigidbody2D.velocity = _rigidbody2D.velocity.normalized * _ballProperties.BallBaseSpeed;
             }
         }
     }

@@ -5,15 +5,15 @@ using UnityEngine;
 namespace BlockBreaker.ManagerSystem{
     public class GameOverCollider : MonoBehaviour
     {
-        private void Start()
-        {
-
-        }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Ball"))
             {
                 GameManager.Instance.LostBall(collision.gameObject);
+            }
+            else if(collision.CompareTag("Power Up"))
+            {
+                Destroy(collision.gameObject);
             }
         }
     }

@@ -12,13 +12,24 @@ namespace BlockBreaker.Block
 
         [SerializeField] private int _pointPerBlockDestroyed;
 
+        private GameManager _gameManager;
+        private ScoreManager _scoreManager;
+        private PowerUpManager _powerUpManager;
         private void Start()
         {
+            AccesingObjects();
             CountBreakableBlocks();
         }
+        private void AccesingObjects()
+        {
+            _gameManager = GameManager.Instance;
+            _scoreManager = ScoreManager.Instance;
+            _powerUpManager = PowerUpManager.Instance;
+        }
+
         private void CountBreakableBlocks()
         {
-            GameManager.Instance.CountBreakableBlock(gameObject);
+            _gameManager.CountBreakableBlock(gameObject);
         }
         public void TakeDamage()
         {
@@ -39,9 +50,10 @@ namespace BlockBreaker.Block
         }
         private void DestroyBlock()
         {
-            GameManager.Instance.AddToScore(_pointPerBlockDestroyed);
-            Destroy(gameObject);
-            GameManager.Instance.RemoveBreakableBlock(gameObject);
+            _gameManager.RemoveBreakableBlock(gameObject); // remove block in list
+            _scoreManager.AddToScore(_pointPerBlockDestroyed); // add points each block
+            _powerUpManager.DropPowerUp(transform.position); // drop power up
+            Destroy(gameObject);  // destroy the block
         }
     }
 }

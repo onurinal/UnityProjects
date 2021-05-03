@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using BlockBreaker.Paddle;
 using BlockBreaker.Ball;
 
@@ -12,15 +11,11 @@ namespace BlockBreaker.ManagerSystem
         [SerializeField] private GameObject _ballPrefab; // for create new balls.
         [SerializeField] private int _life;
 
-        // for updating score
-        [SerializeField] private int _currentScore = 0;
-        [SerializeField] private TextMeshProUGUI _scoreText;
-
         private List<GameObject> _ballList = new List<GameObject>(); // storing balls
         private List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
-        private bool _ballLaunched;
-        
-        public static GameManager Instance;
+
+        public static GameManager Instance;  // singleton
+        private PaddleController _paddleController; // for accessing the paddle
         
         private void Awake()
         {
@@ -28,8 +23,15 @@ namespace BlockBreaker.ManagerSystem
         }
         private void Start()
         {
+            AccesingObjects();
             ResetGame();
         }
+
+        private void AccesingObjects()
+        {
+            _paddleController = PaddleController.Instance;
+        }
+
         private void Update()
         {
             if(Input.GetMouseButtonDown(0) && _ballList.Count > 0)
@@ -44,7 +46,7 @@ namespace BlockBreaker.ManagerSystem
         private void ResetGame()
         {
             _life = 3;
-            CreateNewBall();
+            CreateBall();
         }
         private void RemoveLife()
         {
@@ -52,11 +54,11 @@ namespace BlockBreaker.ManagerSystem
             //LOSE CONDITION
             if(_life <= 0)
             {
-                Debug.Log("GAME OVER!");
+                Debug.Log("GAME OVER!");  // Update game over screen
                 return;
             }
-            CreateNewBall();
-            PaddleController.Instance.ResetPaddlePosition();
+            CreateBall();
+            _paddleController.ResetPaddlePosition();
         }
         public void LostBall(GameObject ball)
         {
@@ -71,26 +73,16 @@ namespace BlockBreaker.ManagerSystem
         private void LaunchBall()
         {
             _ballList[0].GetComponent<BallController>().LaunchBall();
-            //_ballLaunched = true;    If will be performance problem, then you can execute this code.
         }
-        private void CreateNewBall()
+        private void CreateBall()
         {
-            GameObject newBall = Instantiate(_ballPrefab);
-            newBall.transform.position = PaddleController.Instance.transform.position + new Vector3(0, 0.25f, 0);
-            newBall.transform.SetParent(PaddleController.Instance.transform);
+            // Quartenion.identity = It means no rotation
+            Vector3 newBallPosition = _paddleController.transform.position + new Vector3(0, 0.25f, 0);
+            GameObject newBall = Instantiate(_ballPrefab,newBallPosition,Quaternion.identity,_paddleController.transform);
 
             _ballList.Add(newBall);
-            //if (!_ballList[0].GetComponent<BallController>().BallLaunched)
-            //{
-            //    _ballLaunched = false;            If will be performance problem, then you can execute this code.
-            //}                                     Do not run getCompenent in update ...
         }
-        // ----------------------- POINTS EACH BLOCK AND MANAGE BLOCKS ---------------
-        public void AddToScore(int perPointBlockDestroyed)
-        {
-            _currentScore = _currentScore + perPointBlockDestroyed;
-            _scoreText.text = _currentScore.ToString();
-        }
+        // ----------------------- COUNTING AND REMOVING BLOCKS ---------------
         public void CountBreakableBlock(GameObject breakableBlock)
         {
             _breakableBlockList.Add(breakableBlock);
@@ -104,5 +96,56 @@ namespace BlockBreaker.ManagerSystem
             }
         }
 
+        // ----------------------- POWER UPS ---------------
+        public void MultiBall()
+        {
+            //GameObject newBall;
+            for (int i = _ballList.Count - 1; i >= 0; i--)
+            {
+                // CHECK HOW MANY BALLS IN SCENE. IF THERE ARE TOO MUCH BALL THEN DO NOT APPLY THE POWER UP EFFECT
+                // OTHERWISE IT CAN CAUSE FPS DROP AND SOME BUGS
+                if (_ballList.Count < 24)
+                {
+                    CreateNewBalls(i);
+                    CreateNewBalls(i);
+                }
+
+                //// Getting ball position for making new balls
+                //Vector3 ballPosition = _ballList[i].transform.position;
+                //// Instantiate new ball
+                //newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+                ////  For example if you make AddForce 400f then you are making rigidbody.velocity -> 8
+                //newBall.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(150f, 250f), Random.Range(300f, 350f)));
+                //// Adding new ball in ball list
+                //_ballList.Add(newBall);
+                //// FIXING THE ERROR. BALL LAUNCHED SHOULD BE TRUE TO NOT GET ERROR.
+                //newBall.GetComponent<BallController>().BallLaunched = true;
+
+                //newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+                //newBall.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-150f, -250f), Random.Range(300f, 350f)));
+                //_ballList.Add(newBall);
+                //newBall.GetComponent<BallController>().BallLaunched = true;
+
+                //// UGURA SOR
+                ////GameObject newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+                ////GameObject newBall2 = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+
+                Debug.Log(_ballList.Count);
+            }
+        }
+        private void CreateNewBalls(int i)
+        {
+            GameObject newBall;
+            // Getting ball position for making new balls
+            Vector3 ballPosition = _ballList[i].transform.position;
+            // Instantiate new ball
+            newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+            //  For example if you make AddForce 400f then you are making rigidbody.velocity -> 8
+            newBall.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-150f, 150f), Random.Range(350f, 400f)));
+            // Adding new ball in ball list
+            _ballList.Add(newBall);
+            // FIXING THE ERROR. BALL LAUNCHED SHOULD BE TRUE TO NOT GET ERROR.
+            newBall.GetComponent<BallController>().BallLaunched = true;
+        }
     }
 }

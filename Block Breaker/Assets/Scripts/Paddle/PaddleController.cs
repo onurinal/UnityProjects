@@ -51,7 +51,7 @@ namespace BlockBreaker.Paddle
         private void OnCollisionEnter2D(Collision2D collision)
         {
             Rigidbody2D ballRigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
-            Vector2 hitPoint = collision.contacts[0].point;
+            Vector2 hitPoint = collision.contacts[0].point;  // get coordinates of the ball on paddle when hit
             float difference = transform.position.x - hitPoint.x;
             if (hitPoint.x < transform.position.x)
             {

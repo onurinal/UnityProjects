@@ -9,6 +9,6 @@ namespace BlockBreaker.Paddle
     {
 
         [Header("Paddle Movement")]
-        public float MovementSpeed = 4f;
+        public float MovementSpeed = 10f;
     }
 }
