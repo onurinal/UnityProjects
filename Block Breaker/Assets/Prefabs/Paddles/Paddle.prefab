@@ -96,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e278b49b1b2151438f5cc7a5147847d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerProperties: {fileID: 11400000, guid: 3aa33584edf273e43b0dd3d59d545b3c, type: 2}
+  _paddleProperties: {fileID: 11400000, guid: 3aa33584edf273e43b0dd3d59d545b3c, type: 2}
   _ballProperties: {fileID: 11400000, guid: fb5d1cab7888dee4aa4bb38f6ce4fef0, type: 2}
+  _powerUpProperties: {fileID: 11400000, guid: bb89a8cf3f7566d4481c3318a8170f98, type: 2}
 --- !u!70 &350005814
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

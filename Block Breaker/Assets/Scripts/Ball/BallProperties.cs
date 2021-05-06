@@ -11,8 +11,12 @@ namespace BlockBreaker.Ball
         // ------- Ball Start Speed -------
         public float BallXSpeed = 0f;       // for starting
         public float BallYSpeed = 7f;       // for starting
-        // ------- Ball Base Speed -------  // make the ball constant speed.
+        // ------- Ball Base Speed -------
         public float BallBaseSpeed = 8f;
+        [Header("Ball Movement")]
+        public float BaseSizeX = 1f;
+        public float BaseSizeY = 1f;
+
         [Space(20)]
         public float BallPushX = 200f;  // for paddle collision. If ball hits left side it will force left movement in PaddleController.cs
     }

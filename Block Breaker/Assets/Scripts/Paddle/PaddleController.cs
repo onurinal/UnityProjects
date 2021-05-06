@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BlockBreaker.Ball;
+using BlockBreaker.ManagerSystem;
 
 namespace BlockBreaker.Paddle
 {
     public class PaddleController : MonoBehaviour
     {
         [Header("Paddle Properties")]
-        [SerializeField] private PaddleProperties _playerProperties = null;
+        [SerializeField] private PaddleProperties _paddleProperties = null;
         [SerializeField] private BallProperties _ballProperties = null;
+        [SerializeField] private PowerUpProperties _powerUpProperties = null;
 
         private SpriteRenderer _paddle;
         private float _minXAndroid = 0f, _maxXAndroid = 0f;
         private float _paddleX = 0f;  // paddle x size to fix screen boundaries
 
+        private GameManager _gameManager;
         public static PaddleController Instance;
         private void Awake()
         {
@@ -22,8 +25,15 @@ namespace BlockBreaker.Paddle
         }
         private void Start()
         {
+            AccessObjects();
             SetUpMovementBoundaries();
         }
+
+        private void AccessObjects()
+        {
+            _gameManager = GameManager.Instance;
+        }
+
         private void Update()
         {
             TouchMovement();
@@ -34,7 +44,7 @@ namespace BlockBreaker.Paddle
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             touchPos.y = transform.position.y;
             touchPos.x = Mathf.Clamp(touchPos.x, _minXAndroid, _maxXAndroid);  // paddle can not go out of screen
-            transform.position = Vector2.Lerp(transform.position, touchPos, Time.deltaTime * _playerProperties.MovementSpeed);
+            transform.position = Vector2.Lerp(transform.position, touchPos, Time.deltaTime * _paddleProperties.MovementSpeed);
         }
         private void SetUpMovementBoundaries()
         {
@@ -62,9 +72,44 @@ namespace BlockBreaker.Paddle
                 ballRigidBody.AddForce(new Vector2(Mathf.Abs(_ballProperties.BallPushX), 0));
             }
         }
-        public void ResetPaddlePosition()
+        // ----------------------- RESET PADDLE SIZE AND POSITION WHEN YOU LOSE YOUR LIFE---------------
+        public void ResetPaddle()
         {
             transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, 0);
+            transform.localScale = new Vector3(_paddleProperties.PaddleBaseSizeX, transform.localScale.y, transform.localScale.z);
+        }
+        // ----------------------- RESIZE PADDLE ---------------
+        public void ExtendPaddleSize()
+        {
+            // If the paddle has max extend size, then do not extend
+            if (transform.localScale.x >= _powerUpProperties.MaxExtend) return;
+            // If there is one ball and the ball didn't launch then detach children and resize the paddle.
+            if (_gameManager.BallList.Count == 1 && !_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+            {
+                transform.DetachChildren();  // Detach children from paddle
+                transform.localScale += new Vector3(_powerUpProperties.ExtendPerPower, 0f, 0f);
+                _gameManager.BallList[0].transform.SetParent(transform);
+            }
+            else
+            {
+                transform.localScale += new Vector3(_powerUpProperties.ExtendPerPower, 0f, 0f);
+            }
+        }
+        public void ShrinkPaddleSize()
+        {
+            // If the paddle has max shrink size, then do not shrink
+            if (transform.localScale.x <= _powerUpProperties.MaxShrink) return;
+            // If there is one ball and the ball didn't launch then detach children and resize the paddle.
+            if (_gameManager.BallList.Count == 1 && !_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+            {
+                transform.DetachChildren();  // Detach children from paddle
+                transform.localScale -= new Vector3(_powerUpProperties.ShrinkPerPower, 0f, 0f);
+                _gameManager.BallList[0].transform.SetParent(transform);
+            }
+            else
+            {
+                transform.localScale -= new Vector3(_powerUpProperties.ShrinkPerPower, 0f, 0f);
+            }
         }
     }
 }

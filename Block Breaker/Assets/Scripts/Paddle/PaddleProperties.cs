@@ -10,5 +10,8 @@ namespace BlockBreaker.Paddle
 
         [Header("Paddle Movement")]
         public float MovementSpeed = 10f;
+
+        [Header("Paddle Properties")]
+        public float PaddleBaseSizeX = 1f;
     }
 }

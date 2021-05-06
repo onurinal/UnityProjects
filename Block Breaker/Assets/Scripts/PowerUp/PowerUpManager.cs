@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BlockBreaker.Paddle;
 
 namespace BlockBreaker.ManagerSystem
 {
@@ -8,6 +9,8 @@ namespace BlockBreaker.ManagerSystem
     {
         [SerializeField] private PowerUpProperties _powerUpProperties = null;
         [SerializeField] private List<GameObject> _powerUpList = new List<GameObject>();
+
+        private PaddleController _paddleController;
 
         public static PowerUpManager Instance;
 
@@ -17,8 +20,14 @@ namespace BlockBreaker.ManagerSystem
         }
         private void Start()
         {
-          
+            AccessObjects();
         }
+
+        private void AccessObjects()
+        {
+            _paddleController = PaddleController.Instance;
+        }
+
         public void DropPowerUp(Vector3 position)
         {
             int percent = Random.Range(0, 101);
@@ -34,11 +43,11 @@ namespace BlockBreaker.ManagerSystem
                 {
                     Instantiate(_powerUpList[0], position, Quaternion.identity);
                 }  
-                else if(powerUpIndex <= _powerUpProperties.IncreasingPaddleSizeChance)
+                else if(powerUpIndex <= _powerUpProperties.ExtendPaddle)
                 {
                     Instantiate(_powerUpList[1], position, Quaternion.identity);
                 }
-                else if(powerUpIndex <= _powerUpProperties.DecreasingPaddleSizeChance)
+                else if(powerUpIndex <= _powerUpProperties.ShrinkPaddle)
                 {
                     Instantiate(_powerUpList[2], position, Quaternion.identity);
                 }
@@ -47,6 +56,26 @@ namespace BlockBreaker.ManagerSystem
                     Instantiate(_powerUpList[3], position, Quaternion.identity);
                 }
             }
+        }
+        public IEnumerator ExtendPaddle()
+        {
+            _paddleController.ExtendPaddleSize();
+            yield return new WaitForSeconds(_powerUpProperties.EndTime);
+            _paddleController.ShrinkPaddleSize();
+        }
+        public void ExtendPaddleCoroutine()
+        {
+            StartCoroutine(ExtendPaddle());
+        }
+        public IEnumerator ShrinkPaddle()
+        {
+            _paddleController.ShrinkPaddleSize();
+            yield return new WaitForSeconds(_powerUpProperties.EndTime);
+            _paddleController.ExtendPaddleSize();
+        }
+        public void ShrinkPaddleCoroutine()
+        {
+            StartCoroutine(ShrinkPaddle());
         }
     }
 }

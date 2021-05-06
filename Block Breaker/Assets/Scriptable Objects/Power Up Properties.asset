@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DropChance: 100
   MultiBallChance: 0
-  IncreasingPaddleSizeChance: 0
-  DecreasingPaddleSizeChance: 100
+  ExtendPaddle: 0
+  ShrinkPaddle: 0
   LaserChance: 0
   DropXSpeed: 0
   DropYSpeed: 2
+  EndTime: 4
+  MaxBallCount: 24
+  MaxSpeedX1: -7
+  MaxSpeedX2: 7
+  MaxExtend: 2.4
+  ExtendPerPower: 0.2
+  MaxShrink: 0.6
+  ShrinkPerPower: 0.2

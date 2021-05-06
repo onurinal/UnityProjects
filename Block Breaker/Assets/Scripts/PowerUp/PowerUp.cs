@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BlockBreaker.ManagerSystem;
+using BlockBreaker.Paddle;
 
 namespace BlockBreaker.ManagerSystem
 {
@@ -10,8 +11,8 @@ namespace BlockBreaker.ManagerSystem
         private enum Effects
         {
             _multiBall,
-            _increasingPaddleSize,
-            _decreasingPaddleSize,
+            _extendPaddle,
+            _shrinkPaddle,
             _laser
         }
         [SerializeField] private Effects _effects;
@@ -19,24 +20,33 @@ namespace BlockBreaker.ManagerSystem
         [SerializeField] private PowerUpProperties _powerUpProperties = null; // access scriptableobject
 
         private GameManager _gameManager;
+        private PaddleController _paddleController;
+        private PowerUpManager _powerUpManager;
         private Rigidbody2D _rigidbody2D;
         private void Start()
         {
-            _gameManager = GameManager.Instance;
-            DropSpeed();
+            AccessObjects();
+            SetupDropSpeed();
         }
+
+        private void AccessObjects()
+        {
+            _gameManager = GameManager.Instance;
+            _paddleController = PaddleController.Instance;
+            _powerUpManager = PowerUpManager.Instance;
+        }
+
         // ----------------------- MANAGE POWER UPS DROP SPEED ---------------
-        private void DropSpeed()
+        private void SetupDropSpeed()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _rigidbody2D.velocity = new Vector2(_powerUpProperties.DropXSpeed, -_powerUpProperties.DropYSpeed);
+            _rigidbody2D.velocity = new Vector2(_powerUpProperties.DropXSpeed, -(_powerUpProperties.DropYSpeed));
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
             {
                 ApplyEffects();
-
                 Destroy(gameObject);
             }
         }
@@ -45,14 +55,13 @@ namespace BlockBreaker.ManagerSystem
         {
             switch (_effects)
             {
-                case Effects._multiBall:
-                    _gameManager.MultiBall();
+                case Effects._multiBall: _gameManager.MultiBall();
                     break;
 
-                case Effects._increasingPaddleSize:
+                case Effects._extendPaddle: _powerUpManager.ExtendPaddleCoroutine();
                     break;
 
-                case Effects._decreasingPaddleSize:
+                case Effects._shrinkPaddle: _powerUpManager.ShrinkPaddleCoroutine();
                     break;
 
                 case Effects._laser:

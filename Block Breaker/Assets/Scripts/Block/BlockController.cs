@@ -11,6 +11,7 @@ namespace BlockBreaker.Block
         [SerializeField] private Sprite[] _blockSprites;
 
         [SerializeField] private int _pointPerBlockDestroyed;
+        private bool _isBlockAlive = true;
 
         private GameManager _gameManager;
         private ScoreManager _scoreManager;
@@ -51,7 +52,14 @@ namespace BlockBreaker.Block
         private void DestroyBlock()
         {
             _gameManager.RemoveBreakableBlock(gameObject); // remove block in list
-            _scoreManager.AddToScore(_pointPerBlockDestroyed); // add points each block
+            // Sometimes balls hit same block at the same time. Thats why we need to use bool variable for fix
+            if (_isBlockAlive)
+            {
+                _scoreManager.AddToScore(_pointPerBlockDestroyed); // add points each block
+                _isBlockAlive = false;
+                GetComponent<Collider2D>().enabled = false; // no collider when it needs to be destroyed
+                GetComponent<SpriteRenderer>().enabled = false; // no sprite when it needs to be destroyed
+            }
             _powerUpManager.DropPowerUp(transform.position); // drop power up
             Destroy(gameObject);  // destroy the block
         }
