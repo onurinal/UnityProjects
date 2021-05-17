@@ -13,9 +13,11 @@ namespace BlockBreaker.Ball
         public float BallYSpeed = 7f;       // for starting
         // ------- Ball Base Speed -------
         public float BallBaseSpeed = 8f;
-        [Header("Ball Movement")]
+        [Header("Ball Properties")]
         public float BaseSizeX = 1f;
         public float BaseSizeY = 1f;
+        public float BallSpawnPointY;
+        public int BallDamage;
 
         [Space(20)]
         public float BallPushX = 200f;  // for paddle collision. If ball hits left side it will force left movement in PaddleController.cs

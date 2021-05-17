@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BlockBreaker.Paddle;
 using BlockBreaker.Ball;
+using TMPro;
 
 namespace BlockBreaker.ManagerSystem
 {
@@ -11,12 +12,15 @@ namespace BlockBreaker.ManagerSystem
         [SerializeField] private PowerUpProperties _powerUpProperties = null; // access scriptable object
         [SerializeField] private BallProperties _ballProperties = null; // access scriptable object
         [SerializeField] private GameObject _ballPrefab; // for create new balls.
-        [SerializeField] private int _life;
+
+        // LIFE UI MANAGEMENT
+        [SerializeField] private TextMeshProUGUI _playerLifeText;
+        [SerializeField] private int _playerLife;
 
         public List<GameObject> BallList = new List<GameObject>(); // storing balls
         private List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
 
-        private PaddleController _paddleController; // accessing the paddle
+        private PaddleController _paddleController; // accessing the paddle controller
         private PowerUpManager _powerUpManager; // accessing the power up manager
 
         public static GameManager Instance;  // singleton
@@ -29,14 +33,9 @@ namespace BlockBreaker.ManagerSystem
             AccesingObjects();
             ResetGame();
         }
-        private void AccesingObjects()
-        {
-            _paddleController = PaddleController.Instance;
-            _powerUpManager = PowerUpManager.Instance;
-        }
         private void Update()
         {
-            if(Input.GetMouseButtonDown(0) && BallList.Count > 0)
+            if (Input.GetMouseButtonDown(0) && BallList.Count > 0)
             {
                 if (BallList[0] != null && !BallList[0].GetComponent<BallController>().BallLaunched)
                 {
@@ -44,25 +43,34 @@ namespace BlockBreaker.ManagerSystem
                 }
             }
         }
+        private void AccesingObjects()
+        {
+            _paddleController = PaddleController.Instance;
+            _powerUpManager = PowerUpManager.Instance;
+        }
+
         // ----------------------- LIFE MANAGEMENT ---------------
         private void ResetGame()
         {
-            _life = 3;
+            _playerLife = 3;
+            _playerLifeText.text = _playerLife.ToString();
             CreateBall();
         }
         private void RemoveLife()
         {
-            _life--;
+            _playerLife--;
+            _playerLifeText.text = _playerLife.ToString();
             //LOSE CONDITION
-            if(_life <= 0)
+            if(_playerLife <= 0)
             {
                 Debug.Log("GAME OVER!");  // Update game over screen
                 return;
             }
             CreateBall();
             _paddleController.ResetPaddle(); // reset size and position
-            _powerUpManager.StopAllCoroutines(); // disable all power ups when lose life
-           
+            // DISABLE ALL COROUTINES ( POWER UPS ) WHEN LOSE LIFE
+            _powerUpManager.StopAllCoroutines();
+            _paddleController.StopAllCoroutines();
         }
         public void LostBall(GameObject ball)
         {
@@ -73,7 +81,7 @@ namespace BlockBreaker.ManagerSystem
                 RemoveLife();
             }
         }
-        // ----------------------- CREATE NEW BALL AND LAUNCH THE BALL ---------------
+        // ----------------------- CREATE THE BALL AND LAUNCH IT AT STARTING ---------------
         private void LaunchBall()
         {
             BallList[0].GetComponent<BallController>().LaunchBall();
@@ -81,7 +89,7 @@ namespace BlockBreaker.ManagerSystem
         private void CreateBall()
         {
             // Quartenion.identity = It means no rotation
-            Vector3 newBallPosition = _paddleController.transform.position + new Vector3(0, 0.25f, 0);
+            Vector3 newBallPosition = _paddleController.transform.position + new Vector3(0, _ballProperties.BallSpawnPointY, 0);
             GameObject newBall = Instantiate(_ballPrefab,newBallPosition,Quaternion.identity,_paddleController.transform);
             BallList.Add(newBall);
         }

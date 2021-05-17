@@ -11,7 +11,7 @@ namespace BlockBreaker.ManagerSystem{
             {
                 GameManager.Instance.LostBall(collision.gameObject);
             }
-            else if(collision.CompareTag("Power Up"))
+            else
             {
                 Destroy(collision.gameObject);
             }

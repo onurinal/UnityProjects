@@ -31,11 +31,12 @@ namespace BlockBreaker.Ball
         // ----------------------- DAMAGE TO BLOCKS BY BALL ---------------
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            BlockController _blockController = collision.gameObject.GetComponent<BlockController>();
-            if (_blockController != null)
-            {
-                _blockController.TakeDamage();
-            }
+            collision.gameObject.GetComponent<BlockController>()?.TakeDamage(_ballProperties.BallDamage); // Short version of the code below
+            //BlockController _blockController = collision.gameObject.GetComponent<BlockController>();
+            //if (_blockController != null)
+            //{
+            //    _blockController.TakeDamage();
+            //}
         }
         // ----------------------- MAKING BALL CONSTANT SPEED ---------------
         private void OnCollisionExit2D(Collision2D collision)

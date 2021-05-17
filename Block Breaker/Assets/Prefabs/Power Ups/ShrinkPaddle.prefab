@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2285087097407065392}
   - component: {fileID: 2285087097407065407}
   - component: {fileID: 1152283808808751404}
-  m_Layer: 0
-  m_Name: DecreasingPaddleSize
+  m_Layer: 9
+  m_Name: ShrinkPaddle
   m_TagString: Power Up
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

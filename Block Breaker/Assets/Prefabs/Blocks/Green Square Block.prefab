@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2454015039352543411}
   - component: {fileID: 7139401950535152343}
   - component: {fileID: 1709928470}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Green Square Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,5 +155,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _blockLife: 1
-  _blockSprites: []
+  _blockSpriteList: []
   _pointPerBlockDestroyed: 5

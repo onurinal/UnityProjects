@@ -13,7 +13,6 @@ namespace BlockBreaker.ManagerSystem
         private PaddleController _paddleController;
 
         public static PowerUpManager Instance;
-
         private void Awake()
         {
             Instance = this;
@@ -22,7 +21,6 @@ namespace BlockBreaker.ManagerSystem
         {
             AccessObjects();
         }
-
         private void AccessObjects()
         {
             _paddleController = PaddleController.Instance;
@@ -57,23 +55,24 @@ namespace BlockBreaker.ManagerSystem
                 }
             }
         }
-        public IEnumerator ExtendPaddle()
+        // ----------------------- EXTEND AND SHRINK POWER UPS ---------------
+        private IEnumerator ExtendPaddle()
         {
             _paddleController.ExtendPaddleSize();
-            yield return new WaitForSeconds(_powerUpProperties.EndTime);
+            yield return new WaitForSeconds(_powerUpProperties.PowerUpEndTime);
             _paddleController.ShrinkPaddleSize();
         }
-        public void ExtendPaddleCoroutine()
+        public void StartExtendPaddle()
         {
             StartCoroutine(ExtendPaddle());
         }
-        public IEnumerator ShrinkPaddle()
+        private IEnumerator ShrinkPaddle()
         {
             _paddleController.ShrinkPaddleSize();
-            yield return new WaitForSeconds(_powerUpProperties.EndTime);
+            yield return new WaitForSeconds(_powerUpProperties.PowerUpEndTime);
             _paddleController.ExtendPaddleSize();
         }
-        public void ShrinkPaddleCoroutine()
+        public void StartShrinkPaddle()
         {
             StartCoroutine(ShrinkPaddle());
         }

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Power Up Properties
   m_EditorClassIdentifier: 
   DropChance: 100
-  MultiBallChance: 0
-  ExtendPaddle: 0
-  ShrinkPaddle: 0
-  LaserChance: 0
+  MultiBallChance: 20
+  ExtendPaddle: 40
+  ShrinkPaddle: 60
+  LaserChance: 80
   DropXSpeed: 0
   DropYSpeed: 2
-  EndTime: 4
+  PowerUpEndTime: 4
   MaxBallCount: 24
   MaxSpeedX1: -7
   MaxSpeedX2: 7
@@ -27,3 +27,6 @@ MonoBehaviour:
   ExtendPerPower: 0.2
   MaxShrink: 0.6
   ShrinkPerPower: 0.2
+  LaserDamage: 1
+  LaserSpeedY: 7
+  ReleasingPerLaserTime: 0.2

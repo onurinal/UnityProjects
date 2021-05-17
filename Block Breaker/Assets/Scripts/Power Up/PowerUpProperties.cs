@@ -22,7 +22,7 @@ namespace BlockBreaker.ManagerSystem
         [Header("Properties")]
         public float DropXSpeed;
         public float DropYSpeed;
-        public float EndTime;
+        public float PowerUpEndTime;
 
         [Header("MultiBall Properties")]
         public float MaxBallCount;
@@ -35,5 +35,9 @@ namespace BlockBreaker.ManagerSystem
         [Header("Shrink Paddle Properties")]
         public float MaxShrink;
         public float ShrinkPerPower;
+        [Header("Laser Shot Properties")]
+        public int LaserDamage;
+        public float LaserSpeedY;
+        public float ReleasingPerLaserTime;
     }
 }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 921371326}
   - component: {fileID: 921371328}
   - component: {fileID: 921371327}
-  m_Layer: 0
-  m_Name: Top Collider
+  m_Layer: 10
+  m_Name: Top Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,8 +201,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6267111196017757608}
   - component: {fileID: 6267111196017757609}
-  m_Layer: 0
-  m_Name: Left Collider
+  m_Layer: 10
+  m_Name: Left Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,8 +311,8 @@ GameObject:
   - component: {fileID: 6267111197132253893}
   - component: {fileID: 6267111197132253892}
   - component: {fileID: 6267111197132253899}
-  m_Layer: 0
-  m_Name: Game Over Collider
+  m_Layer: 11
+  m_Name: Death Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,8 +380,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6267111197563862125}
   - component: {fileID: 6267111197563862126}
-  m_Layer: 0
-  m_Name: Right Collider
+  m_Layer: 10
+  m_Name: Right Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

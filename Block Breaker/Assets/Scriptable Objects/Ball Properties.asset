@@ -15,4 +15,8 @@ MonoBehaviour:
   BallXSpeed: 0
   BallYSpeed: 8
   BallBaseSpeed: 8
+  BaseSizeX: 1
+  BaseSizeY: 1
+  BallSpawnPointY: 0.25
+  BallDamage: 1
   BallPushX: 100
