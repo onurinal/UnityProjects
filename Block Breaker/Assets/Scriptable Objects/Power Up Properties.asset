@@ -16,7 +16,7 @@ MonoBehaviour:
   MultiBallChance: 20
   ExtendPaddle: 40
   ShrinkPaddle: 60
-  LaserChance: 80
+  LaserChance: 100
   DropXSpeed: 0
   DropYSpeed: 2
   PowerUpEndTime: 4

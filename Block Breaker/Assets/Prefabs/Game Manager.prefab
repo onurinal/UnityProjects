@@ -46,5 +46,6 @@ MonoBehaviour:
   _powerUpProperties: {fileID: 11400000, guid: bb89a8cf3f7566d4481c3318a8170f98, type: 2}
   _ballProperties: {fileID: 11400000, guid: fb5d1cab7888dee4aa4bb38f6ce4fef0, type: 2}
   _ballPrefab: {fileID: 4176611370848166592, guid: 127d02746d36eba45a18e102aab1a7b9, type: 3}
-  _life: 0
+  _playerLifeText: {fileID: 0}
+  _playerLife: 0
   BallList: []

@@ -135,12 +135,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6e29df074206db9478ace29d471d06cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2235848558bf6246aa4d5577a7b27b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.24, y: 1.24}
+  m_Size: {x: 1.04, y: 0.20666666}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -164,6 +164,7 @@ MonoBehaviour:
   _laserPrefab: {fileID: 1596204632791108598, guid: dc5a6a61b7aef864fb3676edfa7881d6, type: 3}
   _leftSpawnPoint: {fileID: 1404824769}
   _rightSpawnPoint: {fileID: 764428693}
+  _laserEndTime: 0
 --- !u!70 &350005814
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

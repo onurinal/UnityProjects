@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8a72902f77bd36d4b8ab0d3f3df10957, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4f15b31e4d1ba1468bdccc48afa92ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -156,6 +156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _blockLife: 3
   _blockSpriteList:
-  - {fileID: 21300000, guid: 314e798e2ba741147b10311cb97b44ce, type: 3}
-  - {fileID: 21300000, guid: d246aa1283d97e947882807add1ef5a0, type: 3}
+  - {fileID: 21300000, guid: 23d3eb1c140bc8c428e2598f3e65e4ca, type: 3}
+  - {fileID: 21300000, guid: 2f11ee3b7115bbc4ca98fd43b992c87b, type: 3}
   _pointPerBlockDestroyed: 15
