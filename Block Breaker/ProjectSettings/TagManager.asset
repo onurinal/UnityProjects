@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Power Up
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Border
   - Death Line
   - Laser Shot
-  - 
+  - Background
   - 
   - 
   - 
