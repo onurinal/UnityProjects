@@ -9,16 +9,19 @@ namespace BlockBreaker.ManagerSystem
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private PowerUpProperties _powerUpProperties = null; // access scriptable object
-        [SerializeField] private BallProperties _ballProperties = null; // access scriptable object
-        [SerializeField] private GameObject _ballPrefab; // for create new balls.
+        [SerializeField] private PowerUpProperties _powerUpProperties; // access scriptable object
+        [SerializeField] private BallProperties _ballProperties; // access scriptable object
+        
+        // NEW BALLS MANAGEMENT
+        [SerializeField] private GameObject _ballPrefab; // for create new balls
+        private bool _newBallNegativeForce = true; // for releasing the balls opposite direction
 
         // LIFE UI MANAGEMENT
         [SerializeField] private TextMeshProUGUI _playerLifeText;
         [SerializeField] private int _playerLife;
 
         public List<GameObject> BallList = new List<GameObject>(); // storing balls
-        private List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
+        private readonly List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
 
         private PaddleController _paddleController; // accessing the paddle controller
         private PowerUpManager _powerUpManager; // accessing the power up manager
@@ -30,7 +33,7 @@ namespace BlockBreaker.ManagerSystem
         }
         private void Start()
         {
-            AccesingObjects();
+            AccessingObjects();
             ResetGame();
         }
         private void Update()
@@ -43,7 +46,7 @@ namespace BlockBreaker.ManagerSystem
                 }
             }
         }
-        private void AccesingObjects()
+        private void AccessingObjects()
         {
             _paddleController = PaddleController.Instance;
             _powerUpManager = PowerUpManager.Instance;
@@ -64,10 +67,14 @@ namespace BlockBreaker.ManagerSystem
             if(_playerLife <= 0)
             {
                 Debug.Log("GAME OVER!");  // Update game over screen
+                Destroy(_paddleController.gameObject); // Destroy the paddle when game is over
                 return;
             }
-            CreateBall();
+            _powerUpManager.IsExtendAlive = false; // turn off extend power up effects
+            _powerUpManager.IsShrinkAlive = false; // turn off shrink power up effects
             _paddleController.ResetPaddle(); // reset size and position
+            _paddleController.SetUpMovementBoundaries(); // checking movement boundaries
+            CreateBall();
             // DISABLE ALL COROUTINES ( POWER UPS ) WHEN LOSE LIFE
             _powerUpManager.StopAllCoroutines();
             _paddleController.StopAllCoroutines();
@@ -81,14 +88,18 @@ namespace BlockBreaker.ManagerSystem
                 RemoveLife();
             }
         }
+        public int GetPlayerLife()
+        {
+            return _playerLife;
+        }
         // ----------------------- CREATE THE BALL AND LAUNCH IT AT STARTING ---------------
         private void LaunchBall()
         {
-            BallList[0].GetComponent<BallController>().LaunchBall();
+             BallList[0].GetComponent<BallController>().LaunchBall();
         }
         private void CreateBall()
         {
-            // Quartenion.identity = It means no rotation
+            // Quaternion.identity = It means no rotation
             Vector3 newBallPosition = _paddleController.transform.position + new Vector3(0, _ballProperties.BallSpawnPointY, 0);
             GameObject newBall = Instantiate(_ballPrefab,newBallPosition,Quaternion.identity,_paddleController.transform);
             BallList.Add(newBall);
@@ -119,18 +130,26 @@ namespace BlockBreaker.ManagerSystem
                     Vector3 ballPosition = BallList[i].transform.position;
                     CreateNewBall(ballPosition);
                     CreateNewBall(ballPosition);
+                    
                 }
             }
         }
         private void CreateNewBall(Vector3 ballPosition)
         {
-            GameObject newBall;
+            _newBallNegativeForce = !_newBallNegativeForce;
             // Instantiate new ball
-            newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+            var newBall = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
             // access the rigidbody of new ball to change velocity
             Rigidbody2D rigidbody2D = newBall.GetComponent<Rigidbody2D>();
             //release the balls different directions
-            rigidbody2D.velocity = new Vector2(Random.Range(_powerUpProperties.MaxSpeedX1, _powerUpProperties.MaxSpeedX2), _ballProperties.BallYSpeed);
+            if (!_newBallNegativeForce)
+            {
+                rigidbody2D.velocity = new Vector2(Random.Range(_powerUpProperties.MultiBallMinForce, _powerUpProperties.MultiBallMaxForce), _ballProperties.BallYSpeed);
+            }
+            else
+            {
+                rigidbody2D.velocity = new Vector2(Random.Range(- _powerUpProperties.MultiBallMinForce, - _powerUpProperties.MultiBallMaxForce), _ballProperties.BallYSpeed);
+            }
             // make constant speed
             rigidbody2D.velocity = rigidbody2D.velocity.normalized * _ballProperties.BallBaseSpeed;
             // Adding new ball in ball list

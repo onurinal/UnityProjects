@@ -7,8 +7,12 @@ namespace BlockBreaker.ManagerSystem
 {
     public class PowerUpManager : MonoBehaviour
     {
-        [SerializeField] private PowerUpProperties _powerUpProperties = null;
+        [SerializeField] private PowerUpProperties _powerUpProperties;
         [SerializeField] private List<GameObject> _powerUpList = new List<GameObject>();
+
+        // EXTEND AND SHRINK POWER UP PROPERTIES
+        public bool IsExtendAlive;
+        public bool IsShrinkAlive;
 
         private PaddleController _paddleController;
 
@@ -25,7 +29,6 @@ namespace BlockBreaker.ManagerSystem
         {
             _paddleController = PaddleController.Instance;
         }
-
         public void DropPowerUp(Vector3 position)
         {
             int percent = Random.Range(0, 101);
@@ -41,11 +44,11 @@ namespace BlockBreaker.ManagerSystem
                 {
                     Instantiate(_powerUpList[0], position, Quaternion.identity);
                 }  
-                else if(powerUpIndex <= _powerUpProperties.ExtendPaddle)
+                else if(powerUpIndex <= _powerUpProperties.ExtendPaddleChance)
                 {
                     Instantiate(_powerUpList[1], position, Quaternion.identity);
                 }
-                else if(powerUpIndex <= _powerUpProperties.ShrinkPaddle)
+                else if(powerUpIndex <= _powerUpProperties.ShrinkPaddleChance)
                 {
                     Instantiate(_powerUpList[2], position, Quaternion.identity);
                 }
@@ -56,25 +59,42 @@ namespace BlockBreaker.ManagerSystem
             }
         }
         // ----------------------- EXTEND AND SHRINK POWER UPS ---------------
-        private IEnumerator ExtendPaddle()
-        {
-            _paddleController.ExtendPaddleSize();
-            yield return new WaitForSeconds(_powerUpProperties.PowerUpEndTime);
-            _paddleController.ShrinkPaddleSize();
-        }
         public void StartExtendPaddle()
         {
-            StartCoroutine(ExtendPaddle());
-        }
-        private IEnumerator ShrinkPaddle()
-        {
-            _paddleController.ShrinkPaddleSize();
-            yield return new WaitForSeconds(_powerUpProperties.PowerUpEndTime);
-            _paddleController.ExtendPaddleSize();
+            if (IsShrinkAlive && !IsExtendAlive) // if we got shrink and extend power up nearly same time then we need to check the last power up that we got
+            {
+                IsShrinkAlive = false;
+                IsExtendAlive = true;
+                _paddleController.ExtendOrShrinkTimer = _powerUpProperties.PowerUpEndTime;
+            }
+            else if (IsExtendAlive) // if we have extend power up effects and we are getting new one then reset the timer.
+            {
+                _paddleController.ExtendOrShrinkTimer = _powerUpProperties.PowerUpEndTime;
+            }
+            else // basic extend condition
+            {
+                _paddleController.ExtendOrShrinkTimer = _powerUpProperties.PowerUpEndTime;
+                IsExtendAlive = true;
+            }
         }
         public void StartShrinkPaddle()
         {
-            StartCoroutine(ShrinkPaddle());
+            // if we got shrink and extend power up nearly same time then we need to check the last power up that we got
+            if (IsExtendAlive && !IsShrinkAlive)
+            {
+                IsExtendAlive = false;
+                IsShrinkAlive = true;
+                _paddleController.ExtendOrShrinkTimer = _powerUpProperties.PowerUpEndTime;
+            }
+            else if (IsShrinkAlive) // if we have shrink power up effects and we are getting new one then reset the timer.
+            {
+                _paddleController.ExtendOrShrinkTimer = _powerUpProperties.PowerUpEndTime;
+            }
+            else // basic shrink condition
+            {
+                _paddleController.ExtendOrShrinkTimer = _powerUpProperties.PowerUpEndTime;
+                IsShrinkAlive = true;
+            }
         }
     }
 }

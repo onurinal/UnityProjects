@@ -16,7 +16,7 @@ namespace BlockBreaker.ManagerSystem
         }
         [SerializeField] private Effects _effects;
 
-        [SerializeField] private PowerUpProperties _powerUpProperties = null; // access scriptableobject
+        [SerializeField] private PowerUpProperties _powerUpProperties; // access scriptable's
 
         private GameManager _gameManager;
         private PowerUpManager _powerUpManager;
@@ -52,22 +52,37 @@ namespace BlockBreaker.ManagerSystem
         {
             switch (_effects)
             {
-                case Effects._multiBall: _gameManager.MultiBall();
+                case Effects._multiBall:
+                    if (_gameManager.GetPlayerLife() > 0) // if we have no life and we are getting power up then do not apply effects
+                    {
+                        _gameManager.MultiBall();
+                    }
                     break;
 
-                case Effects._extendPaddle: _powerUpManager.StartExtendPaddle();
+                case Effects._extendPaddle:
+                    if (_gameManager.GetPlayerLife() > 0) // if we have no life and we are getting power up then do not apply effects
+                    {
+                        _powerUpManager.StartExtendPaddle();
+                    }
                     break;
 
-                case Effects._shrinkPaddle: _powerUpManager.StartShrinkPaddle();
+                case Effects._shrinkPaddle:
+                    if (_gameManager.GetPlayerLife() > 0) // if we have no life and we are getting power up then do not apply effects
+                    {
+                        _powerUpManager.StartShrinkPaddle();
+                    }
                     break;
 
                 case Effects._laser:
-                    // CHECKING ACTIVE LASER POWER UP. IF PLAYER GOT IT BEFORE THEN STOP SHOOTING AND START TIMING AGAIN
-                    if(_paddleController._laserEndTime > 0)
+                    if (_gameManager.GetPlayerLife() > 0) // if we have no life and we are getting power up then do not apply effects
                     {
-                        _paddleController.StopAllCoroutines();
+                        // CHECKING ACTIVE LASER POWER UP. IF PLAYER GOT IT BEFORE THEN STOP SHOOTING AND START TIMING AGAIN
+                        if(_paddleController._laserEndTime > 0)
+                        {
+                            _paddleController.StopAllCoroutines();
+                        }
+                        _paddleController.StartLaserShot();
                     }
-                    _paddleController.StartLaserShot();
                     break;
             }
         }

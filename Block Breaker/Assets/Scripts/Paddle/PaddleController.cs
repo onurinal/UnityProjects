@@ -9,22 +9,28 @@ namespace BlockBreaker.Paddle
     public class PaddleController : MonoBehaviour
     {
         [Header("Paddle Properties")]
-        [SerializeField] private PaddleProperties _paddleProperties = null;
-        [SerializeField] private BallProperties _ballProperties = null;
-        [SerializeField] private PowerUpProperties _powerUpProperties = null;
+        [SerializeField] private PaddleProperties _paddleProperties;
+        [SerializeField] private BallProperties _ballProperties;
+        [SerializeField] private PowerUpProperties _powerUpProperties;
 
-        // FOR SETUP MOVEMENT BOUNDRAIES
+        // FOR SETUP MOVEMENT BOUNDARIES
         private SpriteRenderer _paddleSprite;
-        private float _minXAndroid = 0f, _maxXAndroid = 0f;
-        private float _paddleXSize = 0f;  // paddle x size to fix screen boundaries
+        private float _minXAndroid, _maxXAndroid;
+        private float _paddleXSize;  // paddle x size to fix screen boundaries
         private Camera _gameCamera;
+
+        // // FOR EXTEND OR SHRINK POWER UP PROPERTIES
+        private float _currentPaddleSizeX;
+        private float _goalPaddleSizeX;
+        public double ExtendOrShrinkTimer;
 
         // SETUP POSITION TO RELEASE LASER SHOTS ON PADDLE
         [SerializeField] private GameObject _laserPrefab;
         [SerializeField] private Transform _leftSpawnPoint, _rightSpawnPoint;
-        public float _laserEndTime = 0f;
+        public float _laserEndTime;
 
         private GameManager _gameManager;
+        private PowerUpManager _powerUpManager;
         public static PaddleController Instance;
         private void Awake()
         {
@@ -38,13 +44,23 @@ namespace BlockBreaker.Paddle
         private void AccessObjects()
         {
             _gameManager = GameManager.Instance;
-            // FOR SETUP MOVEMENT BOUNDRAIES
+            _powerUpManager = PowerUpManager.Instance;
+            // FOR SETUP MOVEMENT BOUNDARIES
             _paddleSprite = GetComponent<SpriteRenderer>();
              _gameCamera = Camera.main;
         }
         private void Update()
         {
             TouchMovement();
+
+            if (_powerUpManager.IsExtendAlive)
+            {
+                ExtendPaddle();
+            }
+            else if (_powerUpManager.IsShrinkAlive)
+            {
+                ShrinkPaddle();
+            }
         }
         // ----------------------- PADDLE MOVEMENT AND SET UP BOUNDARY ---------------
         private void TouchMovement()
@@ -54,7 +70,7 @@ namespace BlockBreaker.Paddle
             touchPos.x = Mathf.Clamp(touchPos.x, _minXAndroid, _maxXAndroid);  // paddle can not go out of screen
             transform.position = Vector2.Lerp(transform.position, touchPos, Time.deltaTime * _paddleProperties.MovementSpeed);
         }
-        private void SetUpMovementBoundaries()
+        public void SetUpMovementBoundaries()
         {
             // getting only x size because we don't need y size. Paddle can not move horizontally.
             _paddleXSize = _paddleSprite.bounds.size.x / 2;  // Because paddle sprite pivot is bottom center
@@ -68,12 +84,11 @@ namespace BlockBreaker.Paddle
         {
             Rigidbody2D ballRigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
             Vector2 hitPoint = collision.contacts[0].point;  // get coordinates of the ball on paddle when hit
-            float difference = transform.position.x - hitPoint.x;
-            if (hitPoint.x < transform.position.x)
+            if (hitPoint.x < transform.position.x) // add force to bounce left
             {
                 ballRigidBody.AddForce(new Vector2(-(Mathf.Abs(_ballProperties.BallPushX)), 0));
             }
-            else
+            else // otherwise right
             {
                 ballRigidBody.AddForce(new Vector2(Mathf.Abs(_ballProperties.BallPushX), 0));
             }
@@ -85,39 +100,113 @@ namespace BlockBreaker.Paddle
             transform.localScale = new Vector3(_paddleProperties.PaddleBaseSizeX, transform.localScale.y, transform.localScale.z);
         }
         // ----------------------- EXTEND AND SHRINK POWER UPS ---------------
-        public void ExtendPaddleSize()
+        // These Extends, Shrinks and BaseSizePaddle methods only work in update function
+        private void ExtendPaddle()
         {
-            // If the paddle has max extend size, then do not extend
-            if (transform.localScale.x >= _powerUpProperties.MaxExtend) return;
-            // If  the ball didn't launch then detach children and resize the paddle.
-            if (!_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+            ExtendOrShrinkTimer -= Time.deltaTime;
+            if (ExtendOrShrinkTimer > 0)
             {
-                _gameManager.BallList[0].transform.parent = null;  // Detach ball children from paddle to prevent not growing both
-                transform.localScale += new Vector3(_powerUpProperties.ExtendPerPower, 0f, 0f);
-                _gameManager.BallList[0].transform.SetParent(transform);
+                ExtendPaddleSize();
             }
-            else
+            else if (ExtendOrShrinkTimer <= 0)
             {
-                transform.localScale += new Vector3(_powerUpProperties.ExtendPerPower, 0f, 0f);
+                BaseSizePaddle();
             }
-            SetUpMovementBoundaries(); // fix the screen boundraies when you take the extend - shrink power up
         }
-        public void ShrinkPaddleSize()
+        private void ExtendPaddleSize()
         {
-            // If the paddle has max shrink size, then do not shrink
-            if (transform.localScale.x <= _powerUpProperties.MaxShrink) return;
-            // If the ball didn't launch then detach children and resize the paddle.
-            if (!_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+            _currentPaddleSizeX = transform.localScale.x; // get current size of the paddle
+            _goalPaddleSizeX = _powerUpProperties.MaxExtendSize; // target size to reach
+            if (_goalPaddleSizeX > _currentPaddleSizeX)
             {
-                _gameManager.BallList[0].transform.parent = null;  // Detach ball children from paddle to prevent not growing both
-                transform.localScale -= new Vector3(_powerUpProperties.ShrinkPerPower, 0f, 0f);
-                _gameManager.BallList[0].transform.SetParent(transform);
+                if (!_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+                {
+                    _gameManager.BallList[0].transform.SetParent(null); // Detach ball children from paddle to prevent not growing both
+                    _currentPaddleSizeX += Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                    _gameManager.BallList[0].transform.SetParent(transform); // set the parent of the ball
+                }
+                else
+                {
+                    _currentPaddleSizeX += Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                }
+                SetUpMovementBoundaries(); // after apply extend or shrink effects check the movement boundaries
             }
-            else
+        }
+        private void ShrinkPaddle()
+        {
+            ExtendOrShrinkTimer -= Time.deltaTime;
+            if (ExtendOrShrinkTimer > 0)
             {
-                transform.localScale -= new Vector3(_powerUpProperties.ShrinkPerPower, 0f, 0f);
+                ShrinkPaddleSize();
             }
-            SetUpMovementBoundaries(); // fix the screen boundraies when you take the extend - shrink power up
+            else if (ExtendOrShrinkTimer <= 0)
+            {
+                BaseSizePaddle();
+            }
+        }
+        private void ShrinkPaddleSize()
+        {
+            _currentPaddleSizeX = transform.localScale.x; // get current size of the paddle
+            _goalPaddleSizeX =  _powerUpProperties.MaxShrinkSize; // target size to reach
+            if (_goalPaddleSizeX < _currentPaddleSizeX)
+            {
+                if (!_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+                {
+                    _gameManager.BallList[0].transform.SetParent(null); // Detach ball children from paddle to prevent not growing both
+                    _currentPaddleSizeX -= Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                    _gameManager.BallList[0].transform.SetParent(transform); // set the parent of the ball
+                }
+                else
+                {
+                    _currentPaddleSizeX -= Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                }
+                SetUpMovementBoundaries(); // after apply extend or shrink effects check the movement boundaries
+            }
+        }
+        private void BaseSizePaddle()
+        {
+            _currentPaddleSizeX = transform.localScale.x; // get current size of the paddle
+            _goalPaddleSizeX = _paddleProperties.PaddleBaseSizeX; // target size to reach
+            if (_goalPaddleSizeX > _currentPaddleSizeX && _powerUpManager.IsShrinkAlive) // if shrink power up alive then extend the current size
+            {
+                if (!_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+                {
+                    _gameManager.BallList[0].transform.SetParent(null); // Detach ball children from paddle to prevent not growing both
+                    _currentPaddleSizeX += Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                    _gameManager.BallList[0].transform.SetParent(transform); // set the parent of the ball
+                }
+                else
+                {
+                    _currentPaddleSizeX += Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                }
+            }
+            else if (_goalPaddleSizeX < _currentPaddleSizeX && _powerUpManager.IsExtendAlive) // if extend power up alive then shrink the current size
+            {
+                if (!_gameManager.BallList[0].GetComponent<BallController>().BallLaunched)
+                {
+                    _gameManager.BallList[0].transform.SetParent(null); // Detach ball children from paddle to prevent not growing both
+                    _currentPaddleSizeX -= Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                    _gameManager.BallList[0].transform.SetParent(transform); // set the parent of the ball
+                }
+                else
+                {
+                    _currentPaddleSizeX -= Time.deltaTime * _powerUpProperties.ExtendShrinkSpeed;
+                    transform.localScale = new Vector3(_currentPaddleSizeX, transform.localScale.y, transform.localScale.z);
+                }
+            }
+            else // If the basic size is reached then turn off extend or shrink power up
+            {
+                _powerUpManager.IsExtendAlive = false;
+                _powerUpManager.IsShrinkAlive = false;
+            }
+            SetUpMovementBoundaries(); // after apply extend or shrink effects check the movement boundaries
         }
         //----------------------- LASER SHOT POWER UP ---------------
         private IEnumerator LaserShooting()

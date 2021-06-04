@@ -12,21 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5019198d6a62974db4ecb3339b42140, type: 3}
   m_Name: Power Up Properties
   m_EditorClassIdentifier: 
-  DropChance: 100
-  MultiBallChance: 20
-  ExtendPaddle: 40
-  ShrinkPaddle: 60
-  LaserChance: 100
+  DropChance: 0
+  MultiBallChance: 0
+  ExtendPaddleChance: 0
+  ShrinkPaddleChance: 0
+  LaserChance: 0
   DropXSpeed: 0
   DropYSpeed: 2
   PowerUpEndTime: 4
   MaxBallCount: 24
-  MaxSpeedX1: -7
-  MaxSpeedX2: 7
-  MaxExtend: 2.4
-  ExtendPerPower: 0.2
-  MaxShrink: 0.6
-  ShrinkPerPower: 0.2
+  MultiBallMinForce: 1
+  MultiBallMaxForce: 7
+  ExtendShrinkSpeed: 2
+  MaxExtendSize: 2
+  MaxShrinkSize: 0.6
   LaserDamage: 1
   LaserSpeedY: 7
   ReleasingPerLaserTime: 0.2

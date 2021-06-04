@@ -15,8 +15,8 @@ namespace BlockBreaker.ManagerSystem
         // ----------------------- DROP CHANCES FOR POWER UPS---------------
         [Header("Drop Chances")]
         public int MultiBallChance;
-        public int ExtendPaddle;
-        public int ShrinkPaddle;
+        public int ExtendPaddleChance;
+        public int ShrinkPaddleChance;
         public int LaserChance;
 
         [Header("Properties")]
@@ -26,15 +26,16 @@ namespace BlockBreaker.ManagerSystem
 
         [Header("MultiBall Properties")]
         public float MaxBallCount;
-        public float MaxSpeedX1;
-        public float MaxSpeedX2;
+        public float MultiBallMinForce;
+        public float MultiBallMaxForce;
+
+        [Header("Extend Shrink Properties")]
+        public float ExtendShrinkSpeed;
 
         [Header("Extend Paddle Properties")]
-        public float MaxExtend;
-        public float ExtendPerPower;
+        public float MaxExtendSize;
         [Header("Shrink Paddle Properties")]
-        public float MaxShrink;
-        public float ShrinkPerPower;
+        public float MaxShrinkSize;
         [Header("Laser Shot Properties")]
         public int LaserDamage;
         public float LaserSpeedY;

@@ -22,8 +22,10 @@
 # Visual Studio cache directory
 .vs/
 
-# Sprite folder
+# Hide some folders
 Sprites
+JMO Assets
+JMO Assets.meta
 
 # Gradle cache directory
 .gradle/

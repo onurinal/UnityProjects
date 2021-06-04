@@ -8,7 +8,7 @@ namespace BlockBreaker.ManagerSystem
 {
     public class LaserShot : MonoBehaviour
     {
-        [SerializeField] private PowerUpProperties _powerUpProperties = null;
+        [SerializeField] private PowerUpProperties _powerUpProperties;
 
         private Rigidbody2D _rigidbody2D;
         private void Start()
