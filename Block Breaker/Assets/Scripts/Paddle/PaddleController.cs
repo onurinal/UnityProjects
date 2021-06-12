@@ -28,6 +28,9 @@ namespace BlockBreaker.Paddle
         [SerializeField] private GameObject _laserPrefab;
         [SerializeField] private Transform _leftSpawnPoint, _rightSpawnPoint;
         public float _laserEndTime;
+        
+        // FOR PADDLE CONTROLLER SPRITE
+        [SerializeField] private Transform _paddleController; // for controlling the paddle game object
 
         private GameManager _gameManager;
         private PowerUpManager _powerUpManager;
@@ -52,7 +55,7 @@ namespace BlockBreaker.Paddle
         private void Update()
         {
             TouchMovement();
-
+            
             if (_powerUpManager.IsExtendAlive)
             {
                 ExtendPaddle();
@@ -69,6 +72,7 @@ namespace BlockBreaker.Paddle
             touchPos.y = transform.position.y;
             touchPos.x = Mathf.Clamp(touchPos.x, _minXAndroid, _maxXAndroid);  // paddle can not go out of screen
             transform.position = Vector2.Lerp(transform.position, touchPos, Time.deltaTime * _paddleProperties.MovementSpeed);
+            _paddleController.transform.position = transform.position - new Vector3(0f,0.5f,0f);
         }
         public void SetUpMovementBoundaries()
         {

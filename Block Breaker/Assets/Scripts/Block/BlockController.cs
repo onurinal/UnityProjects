@@ -60,7 +60,6 @@ namespace BlockBreaker.Block
         }
         private void DestroyBlock()
         {
-            _gameManager.RemoveBreakableBlock(gameObject); // remove block in list
             // Sometimes balls hit same block at the same time. That is why we need to use bool variable for fix
             if (_isBlockAlive)
             {
@@ -71,6 +70,7 @@ namespace BlockBreaker.Block
                 Instantiate(_breakParticlePrefab, transform.position, Quaternion.identity); // create particle when block has no life
                 _powerUpManager.DropPowerUp(transform.position); // drop power up
             }
+            _gameManager.RemoveBreakableBlock(gameObject); // remove block in list
             Destroy(gameObject);  // destroy the block
         }
         // ----------------------- BLOCK HIT ANIMATION MANAGEMENT ---------------

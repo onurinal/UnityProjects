@@ -4,6 +4,7 @@ using UnityEngine;
 using BlockBreaker.Paddle;
 using BlockBreaker.Ball;
 using TMPro;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace BlockBreaker.ManagerSystem
 {
@@ -19,12 +20,15 @@ namespace BlockBreaker.ManagerSystem
         // LIFE UI MANAGEMENT
         [SerializeField] private TextMeshProUGUI _playerLifeText;
         [SerializeField] private int _playerLife;
+        
+        private bool _gameEnded;
 
         public List<GameObject> BallList = new List<GameObject>(); // storing balls
         private readonly List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
 
         private PaddleController _paddleController; // accessing the paddle controller
         private PowerUpManager _powerUpManager; // accessing the power up manager
+        private ScoreManager _scoreManager; // accessing the power up manager
 
         public static GameManager Instance;  // singleton
         private void Awake()
@@ -50,6 +54,7 @@ namespace BlockBreaker.ManagerSystem
         {
             _paddleController = PaddleController.Instance;
             _powerUpManager = PowerUpManager.Instance;
+            _scoreManager = ScoreManager.Instance;
         }
 
         // ----------------------- LIFE MANAGEMENT ---------------
@@ -64,9 +69,11 @@ namespace BlockBreaker.ManagerSystem
             _playerLife--;
             _playerLifeText.text = _playerLife.ToString();
             //LOSE CONDITION
-            if(_playerLife <= 0)
+            if(_playerLife <= 0 && !_gameEnded)
             {
-                Debug.Log("GAME OVER!");  // Update game over screen
+                _gameEnded = true;
+                _scoreManager.ShowLosePanel();
+                // _powerUpManager.StopAllCoroutines(); Do not need for now because there is no coroutine in PowerUpManager. Activate this when you have
                 Destroy(_paddleController.gameObject); // Destroy the paddle when game is over
                 return;
             }
@@ -76,14 +83,14 @@ namespace BlockBreaker.ManagerSystem
             _paddleController.SetUpMovementBoundaries(); // checking movement boundaries
             CreateBall();
             // DISABLE ALL COROUTINES ( POWER UPS ) WHEN LOSE LIFE
-            _powerUpManager.StopAllCoroutines();
+            // _powerUpManager.StopAllCoroutines(); Do not need for now because there is no coroutine in PowerUpManager. Activate this when you have
             _paddleController.StopAllCoroutines();
         }
         public void LostBall(GameObject ball)
         {
             BallList.Remove(ball);
             Destroy(ball);
-            if(BallList.Count <= 0)
+            if(BallList.Count <= 0 && !_gameEnded)
             {
                 RemoveLife();
             }
@@ -112,9 +119,13 @@ namespace BlockBreaker.ManagerSystem
         public void RemoveBreakableBlock(GameObject breakableBlock)
         {
             _breakableBlockList.Remove(breakableBlock);
-            if(_breakableBlockList.Count <= 0)
+            // WIN CONDITION
+            if(_breakableBlockList.Count <= 0 && !_gameEnded)
             {
-                Debug.Log("You Won"); // Update win screen...
+                _gameEnded = true;
+                _scoreManager.ShowWinPanel(_playerLife);
+                // _powerUpManager.StopAllCoroutines(); Do not need for now because there is no coroutine in PowerUpManager. Activate this when you have
+                Destroy(_paddleController.gameObject);
             }
         }
         // ----------------------- POWER UPS ---------------

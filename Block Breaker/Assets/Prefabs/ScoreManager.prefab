@@ -44,4 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 0}
+  _winPanelScoreText: {fileID: 0}
+  _losePanelScoreText: {fileID: 0}
   _currentScore: 0
+  _losePanel: {fileID: 0}
+  _winPanel: {fileID: 0}
+  _listStarRank:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

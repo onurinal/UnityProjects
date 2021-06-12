@@ -23,9 +23,14 @@ namespace BlockBreaker.LevelSystem
             _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(_currentSceneIndex - 1);
         }
+
+        public void LoadLevelSelectionMenu()
+        {
+            SceneManager.LoadScene("Level Menu");
+        }
         public void LoadMainMenu()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Main Menu");
         }
         public void LoadQuit()
         {
