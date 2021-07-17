@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Paddle Properties
   m_EditorClassIdentifier: 
   MovementSpeed: 10
-  PaddleBaseSize: 0
+  PaddleBaseSizeX: 1

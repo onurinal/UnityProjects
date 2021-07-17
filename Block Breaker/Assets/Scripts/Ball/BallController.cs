@@ -12,7 +12,7 @@ namespace BlockBreaker.Ball
         private Rigidbody2D _rigidbody2D;
         private float _magnitudeSpeed;  // to make the ball constant speed
 
-        public bool BallLaunched;
+        public bool BallLaunched; // to check ball is launched or not
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -24,7 +24,7 @@ namespace BlockBreaker.Ball
             _rigidbody2D.velocity = new Vector2(_ballProperties.BallXSpeed, _ballProperties.BallYSpeed);
             BallLaunched = true;
 
-            transform.SetParent(transform.parent.parent); // Parent back to the world.
+            transform.SetParent(null); // Parent back to the world.
         }
         // ----------------------- DAMAGE TO BLOCKS BY BALL ---------------
         private void OnCollisionEnter2D(Collision2D collision)

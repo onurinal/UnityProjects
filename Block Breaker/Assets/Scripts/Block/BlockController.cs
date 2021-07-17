@@ -78,7 +78,7 @@ namespace BlockBreaker.Block
         {
             // Just take the current x size because we are extending x and y sizes equally. That is why we don't need to know y size of the block.
             _currentBlockSize = transform.localScale.x;
-            _goalBlockSize = _blockProperties.ExtendSquareBlockSize;
+            _goalBlockSize = _blockProperties.ExtendBlockSize;
             while (_currentBlockSize < _goalBlockSize)
             {
                 _currentBlockSize += Time.deltaTime * _blockProperties.ScaleBlockSpeed;
@@ -90,7 +90,7 @@ namespace BlockBreaker.Block
         {
             // Just take the current x size because we are extending x and y sizes equally. That is why we don't need to know y size of the block.
             _currentBlockSize = transform.localScale.x;
-            _goalBlockSize = _blockProperties.ShrinkSquareBlockSize;
+            _goalBlockSize = _blockProperties.ShrinkBlockSize;
             while (_currentBlockSize > _goalBlockSize)
             {
                 _currentBlockSize -= Time.deltaTime * _blockProperties.ScaleBlockSpeed;

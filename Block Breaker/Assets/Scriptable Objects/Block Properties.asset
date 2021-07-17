@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86b209f076400f4abc922c47cd92b9a, type: 3}
   m_Name: Block Properties
   m_EditorClassIdentifier: 
-  ExtendSquareBlockSize: 1
-  ShrinkSquareBlockSize: 0.7
+  ExtendBlockSize: 1
+  ShrinkBlockSize: 0.7
   ScaleBlockSpeed: 1.5

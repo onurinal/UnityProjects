@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerUpProperties: {fileID: 11400000, guid: bb89a8cf3f7566d4481c3318a8170f98, type: 2}
+  _ballProperties: {fileID: 11400000, guid: fb5d1cab7888dee4aa4bb38f6ce4fef0, type: 2}
   _powerUpList:
   - {fileID: 2285087097407065404, guid: 2224394c19e479e46b3199fa30e21832, type: 3}
   - {fileID: 2285087097407065404, guid: e3dcbd411d991d349b3a20353eedff9f, type: 3}
   - {fileID: 2285087097407065404, guid: 6af76348361e44848b43318e340de73b, type: 3}
   - {fileID: 2285087097407065404, guid: 92592794e7c3af04ba6603c7ac54133b, type: 3}
+  IsExtendAlive: 0
+  IsShrinkAlive: 0

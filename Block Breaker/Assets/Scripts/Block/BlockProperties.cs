@@ -8,8 +8,8 @@ namespace BlockBreaker.Block
     public class BlockProperties : ScriptableObject
     {
         [Header("Block Hit Animation Properties")]
-        public float ExtendSquareBlockSize;
-        public float ShrinkSquareBlockSize;
+        public float ExtendBlockSize;
+        public float ShrinkBlockSize;
         public float ScaleBlockSpeed;
         
     }

@@ -28,9 +28,6 @@ namespace BlockBreaker.Paddle
         [SerializeField] private GameObject _laserPrefab;
         [SerializeField] private Transform _leftSpawnPoint, _rightSpawnPoint;
         public float _laserEndTime;
-        
-        // FOR PADDLE CONTROLLER SPRITE
-        [SerializeField] private Transform _paddleController; // for controlling the paddle game object
 
         private GameManager _gameManager;
         private PowerUpManager _powerUpManager;
@@ -72,12 +69,11 @@ namespace BlockBreaker.Paddle
             touchPos.y = transform.position.y;
             touchPos.x = Mathf.Clamp(touchPos.x, _minXAndroid, _maxXAndroid);  // paddle can not go out of screen
             transform.position = Vector2.Lerp(transform.position, touchPos, Time.deltaTime * _paddleProperties.MovementSpeed);
-            _paddleController.transform.position = transform.position - new Vector3(0f,0.5f,0f);
         }
         public void SetUpMovementBoundaries()
         {
             // getting only x size because we don't need y size. Paddle can not move horizontally.
-            _paddleXSize = _paddleSprite.bounds.size.x / 2;  // Because paddle sprite pivot is bottom center
+            _paddleXSize = _paddleSprite.bounds.size.x / 2;  // because paddle sprite pivot is bottom center
 
             _minXAndroid = _gameCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x + _paddleXSize;  
             _maxXAndroid = _gameCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - _paddleXSize;
@@ -104,7 +100,7 @@ namespace BlockBreaker.Paddle
             transform.localScale = new Vector3(_paddleProperties.PaddleBaseSizeX, transform.localScale.y, transform.localScale.z);
         }
         // ----------------------- EXTEND AND SHRINK POWER UPS ---------------
-        // These Extends, Shrinks and BaseSizePaddle methods only work in update function
+        // These Extends, Shrinks and BaseSizePaddle methods work in update function
         private void ExtendPaddle()
         {
             ExtendOrShrinkTimer -= Time.deltaTime;
@@ -213,7 +209,7 @@ namespace BlockBreaker.Paddle
             SetUpMovementBoundaries(); // after apply extend or shrink effects check the movement boundaries
         }
         //----------------------- LASER SHOT POWER UP ---------------
-        private IEnumerator LaserShooting()
+        public IEnumerator LaserShooting()
         {
             while (_laserEndTime > 0)
             {
@@ -225,11 +221,6 @@ namespace BlockBreaker.Paddle
                 // Decrease the time after releasing two laser
                 _laserEndTime -= _powerUpProperties.ReleasingPerLaserTime * 2;
             }
-        }
-        public void StartLaserShot()
-        {
-            _laserEndTime = _powerUpProperties.PowerUpEndTime; // to check the power up time is over or not
-            StartCoroutine(LaserShooting());
         }
     }
 }
