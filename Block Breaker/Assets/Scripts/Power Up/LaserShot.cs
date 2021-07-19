@@ -28,10 +28,10 @@ namespace BlockBreaker.ManagerSystem
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // If block is unbreakable then do not anything just destroy the laser object
-            BlockController blockController = collision.GetComponent<BlockController>();
-            if (blockController != null)
+            BaseBlock baseBlock = collision.GetComponent<BaseBlock>();
+            if (baseBlock != null)
             {
-                blockController.TakeDamage(_powerUpProperties.LaserDamage);
+                baseBlock.TakeDamage(_powerUpProperties.LaserDamage);
             }
             Destroy(gameObject);
         }

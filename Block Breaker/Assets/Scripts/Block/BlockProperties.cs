@@ -11,6 +11,10 @@ namespace BlockBreaker.Block
         public float ExtendBlockSize;
         public float ShrinkBlockSize;
         public float ScaleBlockSpeed;
-        
+
+        [Header("Death Block Properties")]
+        public float DeathBlockXSpeed;
+        public float DeathBlockYSpeed;
+
     }
 }

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2160314069294048469}
   - component: {fileID: 2918171780226506120}
-  - component: {fileID: 3141552003087072012}
   - component: {fileID: 2353607860264287329}
+  - component: {fileID: -7727610569753628414}
   m_Layer: 8
   m_Name: Green Circle Block
   m_TagString: Untagged
@@ -84,23 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3141552003087072012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616847840768144185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3f57bee7159fe44a447d14ae568e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _blockProperties: {fileID: 11400000, guid: cef5f3a0b15d97b46a8e4258fb8ccd39, type: 2}
-  _blockLife: 1
-  _blockSpriteList: []
-  _pointPerBlockDestroyed: 5
-  _breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
 --- !u!58 &2353607860264287329
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -117,3 +100,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.000528574}
   serializedVersion: 2
   m_Radius: 0.18381357
+--- !u!114 &-7727610569753628414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616847840768144185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3522f0d53455d34faacd132a72db646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockLife: 1
+  pointPerBlockDestroyed: 10
+  breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
+  _blockProperties: {fileID: 0}
+  _blockSpriteList: []

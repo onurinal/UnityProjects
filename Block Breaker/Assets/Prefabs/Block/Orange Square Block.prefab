@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7585812336385858916}
   - component: {fileID: 7585812336385858915}
   - component: {fileID: 8315922868971042082}
-  - component: {fileID: 676857717}
+  - component: {fileID: -1395640680157372911}
   m_Layer: 8
   m_Name: Orange Square Block
   m_TagString: Untagged
@@ -101,7 +101,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.37714285, y: 0.37714285}
+    oldSize: {x: 0.33, y: 0.33}
     newSize: {x: 1.32, y: 1.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -142,7 +142,7 @@ PolygonCollider2D:
       - {x: 0.15020448, y: -0.124497175}
       - {x: 0.15955392, y: -0.10175078}
       - {x: 0.15984836, y: 0.09380018}
---- !u!114 &676857717
+--- !u!114 &-1395640680157372911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,12 +151,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7585812336385858914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3f57bee7159fe44a447d14ae568e4c, type: 3}
+  m_Script: {fileID: 11500000, guid: b3522f0d53455d34faacd132a72db646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockLife: 2
+  pointPerBlockDestroyed: 20
+  breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
   _blockProperties: {fileID: 11400000, guid: cef5f3a0b15d97b46a8e4258fb8ccd39, type: 2}
-  _blockLife: 2
   _blockSpriteList:
   - {fileID: 21300000, guid: 23d3eb1c140bc8c428e2598f3e65e4ca, type: 3}
-  _pointPerBlockDestroyed: 10
-  _breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}

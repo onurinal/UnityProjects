@@ -22,7 +22,7 @@ namespace BlockBreaker.ManagerSystem
         public bool _gameEnded; // to understand game is finished or not
 
         public List<GameObject> BallList = new List<GameObject>(); // storing balls
-        private readonly List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
+        public List<GameObject> _breakableBlockList = new List<GameObject>(); // storing breakable blocks
 
         private PaddleController _paddleController; // accessing the paddle controller
         private PowerUpManager _powerUpManager; // accessing the power up manager
@@ -70,7 +70,7 @@ namespace BlockBreaker.ManagerSystem
             _playerLifeText.text = _playerLife.ToString();
             CreateBall();
         }
-        private void RemoveLife()
+        public void RemoveLife()
         {
             _playerLife--;
             _playerLifeText.text = _playerLife.ToString();
@@ -104,7 +104,7 @@ namespace BlockBreaker.ManagerSystem
         {
             return _playerLife;
         }
-        // ----------------------- CREATE THE BALL AND LAUNCH IT AT STARTING ---------------
+        // ----------------------- BALL MANAGEMENT ---------------
         private void LaunchBall()
         {
              BallList[0].GetComponent<BallController>().LaunchBall();
@@ -115,6 +115,14 @@ namespace BlockBreaker.ManagerSystem
             Vector3 newBallPosition = _paddleController.transform.position + new Vector3(0, _ballProperties.BallSpawnPointY, 0);
             GameObject newBall = Instantiate(_ballPrefab,newBallPosition,Quaternion.identity,_paddleController.transform);
             BallList.Add(newBall);
+        }
+        public void DestroyAllBall()
+        {
+            for (int i = 0; i < BallList.Count; i++)
+            {
+                Destroy(BallList[i].gameObject);
+            }
+            BallList.Clear();
         }
         // ----------------------- COUNTING AND REMOVING BLOCKS ALSO WIN CONDITION HERE ---------------
         public void CountBreakableBlock(GameObject breakableBlock)
@@ -132,7 +140,6 @@ namespace BlockBreaker.ManagerSystem
                 
                 _dataManager.IncreaseReachedLevel(_levelManager.CurrentLevel + 1);
                 _dataManager.UpdateLevelRanks(_levelManager.CurrentLevel,_playerLife);
-                
                 _powerUpManager.StopAllCoroutines();
                 Destroy(_paddleController.gameObject);
             }

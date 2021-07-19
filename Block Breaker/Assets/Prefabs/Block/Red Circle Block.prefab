@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1024626081842297618}
   - component: {fileID: 7912991977717348332}
-  - component: {fileID: 2968961886180882117}
   - component: {fileID: 1731521962965514806}
+  - component: {fileID: -6860122150795524375}
   m_Layer: 8
   m_Name: Red Circle Block
   m_TagString: Untagged
@@ -84,25 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2968961886180882117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747328481607625251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3f57bee7159fe44a447d14ae568e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _blockProperties: {fileID: 11400000, guid: cef5f3a0b15d97b46a8e4258fb8ccd39, type: 2}
-  _blockLife: 3
-  _blockSpriteList:
-  - {fileID: 21300000, guid: 1a6d92d496b98e4429b46f101aa301f7, type: 3}
-  - {fileID: 21300000, guid: f45da1ff85101c84c8384571ef49212f, type: 3}
-  _pointPerBlockDestroyed: 15
-  _breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
 --- !u!58 &1731521962965514806
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -119,3 +100,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.000528574}
   serializedVersion: 2
   m_Radius: 0.18381357
+--- !u!114 &-6860122150795524375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747328481607625251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3522f0d53455d34faacd132a72db646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockLife: 3
+  pointPerBlockDestroyed: 30
+  breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
+  _blockProperties: {fileID: 11400000, guid: cef5f3a0b15d97b46a8e4258fb8ccd39, type: 2}
+  _blockSpriteList:
+  - {fileID: 21300000, guid: 1a6d92d496b98e4429b46f101aa301f7, type: 3}
+  - {fileID: 21300000, guid: f45da1ff85101c84c8384571ef49212f, type: 3}

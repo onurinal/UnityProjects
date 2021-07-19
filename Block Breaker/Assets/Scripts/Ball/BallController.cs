@@ -29,7 +29,7 @@ namespace BlockBreaker.Ball
         // ----------------------- DAMAGE TO BLOCKS BY BALL ---------------
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            collision.gameObject.GetComponent<BlockController>()?.TakeDamage(_ballProperties.BallDamage); // Short version of the code below
+            collision.gameObject.GetComponent<BaseBlock>()?.TakeDamage(_ballProperties.BallDamage); // Short version of the code below
             //BlockController _blockController = collision.gameObject.GetComponent<BlockController>();
             //if (_blockController != null)
             //{

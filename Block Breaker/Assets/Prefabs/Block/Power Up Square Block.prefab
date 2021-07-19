@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7054335734141815451}
   - component: {fileID: 7054335734141815444}
-  - component: {fileID: 690865463}
   - component: {fileID: 776396979113475837}
+  - component: {fileID: 1458769194675787120}
   m_Layer: 8
   m_Name: Power Up Square Block
   m_TagString: Untagged
@@ -85,23 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &690865463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054335734141815445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3f57bee7159fe44a447d14ae568e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _blockProperties: {fileID: 11400000, guid: cef5f3a0b15d97b46a8e4258fb8ccd39, type: 2}
-  _blockLife: 1
-  _blockSpriteList: []
-  _pointPerBlockDestroyed: 50
-  _breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
 --- !u!60 &776396979113475837
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -160,6 +143,21 @@ PolygonCollider2D:
       - {x: 0.15020448, y: -0.124497175}
       - {x: 0.15955392, y: -0.10175078}
       - {x: 0.15984836, y: 0.09380018}
+--- !u!114 &1458769194675787120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054335734141815445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfeb308ac89b33e4f8058067749980a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockLife: 1
+  pointPerBlockDestroyed: 50
+  breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
 --- !u!1 &7054335734347331970
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +229,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 251c8f8c540081245a370e1e16a96a62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

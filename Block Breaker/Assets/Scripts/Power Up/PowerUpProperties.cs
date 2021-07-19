@@ -7,11 +7,6 @@ namespace BlockBreaker.ManagerSystem
     [CreateAssetMenu(menuName = "BlockBreaker/PowerUp/PowerUpProperties")]
     public class PowerUpProperties : ScriptableObject
     {
-        // ----------------------- GENERAL DROP CHANCE---------------
-        [Header("General Drop Chance")]
-        [Range(0,100)]
-        public int DropChance;
-
         // ----------------------- DROP CHANCES FOR POWER UPS---------------
         [Header("Drop Chances")]
         public int MultiBallChance;
@@ -33,6 +28,7 @@ namespace BlockBreaker.ManagerSystem
         public float ExtendShrinkSpeed;
 
         [Header("Extend Paddle Properties")]
+        public float ExtendPaddleSizePerPower;
         public float MaxExtendSize;
         [Header("Shrink Paddle Properties")]
         public float MaxShrinkSize;

@@ -37,7 +37,7 @@ namespace BlockBreaker.ManagerSystem
         private void SetUpDropSpeed()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _rigidbody2D.velocity = new Vector2(_powerUpProperties.DropXSpeed, -(_powerUpProperties.DropYSpeed));
+            _rigidbody2D.velocity = new Vector2(_powerUpProperties.DropXSpeed, _powerUpProperties.DropYSpeed);
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {

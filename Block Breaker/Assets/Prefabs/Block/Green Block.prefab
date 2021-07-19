@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5113159151817274115}
   - component: {fileID: 1008465486940037223}
-  - component: {fileID: 570820468959694564}
   - component: {fileID: 7958649842832672206}
+  - component: {fileID: -8803318355835154503}
   m_Layer: 8
   m_Name: Green Block
   m_TagString: Untagged
@@ -84,23 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &570820468959694564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9152388617662257316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3f57bee7159fe44a447d14ae568e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _blockProperties: {fileID: 11400000, guid: cef5f3a0b15d97b46a8e4258fb8ccd39, type: 2}
-  _blockLife: 1
-  _blockSpriteList: []
-  _pointPerBlockDestroyed: 5
-  _breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
 --- !u!70 &7958649842832672206
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -117,3 +100,20 @@ CapsuleCollider2D:
   m_Offset: {x: -0.00011223556, y: 0.00000005961803}
   m_Size: {x: 0.88939667, y: 0.31445467}
   m_Direction: 1
+--- !u!114 &-8803318355835154503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152388617662257316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3522f0d53455d34faacd132a72db646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockLife: 1
+  pointPerBlockDestroyed: 10
+  breakParticlePrefab: {fileID: 395031058680739610, guid: 78ed69292905427438429fe1a5dc214f, type: 3}
+  _blockProperties: {fileID: 0}
+  _blockSpriteList: []

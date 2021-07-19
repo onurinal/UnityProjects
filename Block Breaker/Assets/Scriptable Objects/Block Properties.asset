@@ -15,3 +15,5 @@ MonoBehaviour:
   ExtendBlockSize: 1
   ShrinkBlockSize: 0.7
   ScaleBlockSpeed: 1.5
+  DeathBlockXSpeed: 0
+  DeathBlockYSpeed: -3
